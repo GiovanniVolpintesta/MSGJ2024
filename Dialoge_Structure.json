@@ -19,7 +19,8 @@
 							{ "type":"received", "text": "testo1" },
 							{ "type":"sent", "text": "testo2" },
 							{ "type":"received", "text": "testo3" },
-							{ "type":"statsIncrement", "satisfation": -2, "profit": -2 }
+							{ "type":"statIncrement", "stat":"satisfation", "value":-2 }
+							{ "type":"statIncrement", "stat":"profit", "value":2 }
 						]
 					}
 				]}
