@@ -1,0 +1,566 @@
+{
+	"stats": [
+		{ "id":"profit", "isGlobal":"true", "min":10, "max":100, "initValue":50 },
+		{ "id":"satisfation", "isGlobal":"false", "min":10, "max":100, "initValue":50 },
+		{ "id":"day", "isGlobal":"true", "min":1, "max":7, "initValue":1}
+	],	
+	"dialogues": [
+		{
+			"id": "d_0001",
+			"characterId": "c_00",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":1},
+				{"type":"statLowerEqual", "id":"profit", "value":40}
+			],
+			"priority": 1,
+			"messages": [
+				{ "type":"received", "text": "DIECIMILA PUNTI???"},
+				{ "type":"sent", "text": "Buongiorno anche a lei capo."},
+				{ "type":"received", "text": "DIECIMILA STRAMALEDETTI PUNTI???"},
+				{ "type":"sent", "text": "Non la seguo signore."},
+				{ "type":"received", "text": "LE TUE BRAVATE CI SONO COSTATE DIECIMILA PUNTI IN BORSA!"},
+				{ "type":"sent", "text": "Oh… Ma come è possibile?"},
+				{ "type":"received", "text": "NON LO SO!"},
+				{ "type":"received", "text": " MA VEDI DI DARTI UNA REGOLATA!"}
+			]
+		},
+		{
+			"id": "d_0002",
+			"characterId": "c_00",
+			"unlockConditions": [
+				{"type":"statEqual", "id":"day", "value":2},
+				{"type":"statHigherEqual", "id":"profit", "value":60}
+			],
+			"priority": 1,
+			"messages": [
+				{ "type":"received", "text": "Buon Martedì Grasso!"},
+				{ "type":"sent", "text": "Ma signore… Oggi non è martedì grasso."},
+				{ "type":"received", "text": "E invece sì."},
+				{ "type":"received", "text": "Le tue scelte ci hanno ingrassato il portafogli."},
+				{ "type":"sent", "text": "Continua così"},
+				{ "type":"received", "text": "Grazie signore."}
+			]
+		},
+		{
+			"id": "d_0101",
+			"characterId": "c_01",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":1}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": "Buongiorno Caro... Che attesa infinita!"},
+				{ "type":"sent", "text": "Buongiorno signora, mi dica pure."},
+				{ "type":"received", "text": "Ho un problema con il mio nuovo computer. Lo schermo è tutto nero."},
+				{ "type":"received", "text": "Ho lasciato giocare mio nipote... che giochi violenti che fa! Lui spara, spara..."},
+				{ "type":"received", "text": "Ho chiuso la corrente elettrica, ha finito il suo gioco... ma adesso vedo tutto nero."},
+				{ "type":"sent", "text": "Intende il monitor? È tutto nero?"},
+				{ "type":"received", "text": "Si, cosa devo fare?"}
+			],
+			"choices": [
+				{"boxText": "Accenderlo",
+					"messages": [
+						{ "type":"sent", "text": "Provi a schiacciare il tasto in basso a destra."},
+						{ "type":"received", "text": "Oh sì, ora funziona. Grazie Caro, a Buon Rendere."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 1},
+						{ "type":"statIncrement", "stat":"profit", "value": -1}
+					]
+				},
+				{"boxText": "Chiedere al nipote",
+					"messages": [
+						{ "type":"sent", "text": "Faccia pace col nipote e si faccia aiutare da lui."},
+						{ "type":"received", "text": "Il mio nipotino... era molto arrabbiato quando ho chiuso “Sportnite”... mi farò aiutare da lui... a Buon Rendere."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 0},
+						{ "type":"statIncrement", "stat":"profit", "value": 0}
+					]
+				},
+				{"boxText": "Buttarlo via",
+					"messages": [
+						{ "type":"sent", "text": "Butti il monitor, ne compri uno nuovo."},
+						{ "type":"received", "text": "Ohh, vedrò di farmi consigliare da mio nipote... sà, lui è molto esperto di queste cose... guarda questo oggetto tutto il giorno... forse da grande diventerà un buon osservatore... a Buon Rendere."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -1},
+						{ "type":"statIncrement", "stat":"profit", "value": 1}
+					]
+				}
+			]
+		},
+		{
+			"id": "d_0102",
+			"characterId": "c_01",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":2},
+				{"type":"dialoguePlayed", "id":"d_0101"}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": "Buongiorno Caro! Sono felice di risentirla!"},
+				{ "type":"received", "text": "Finalmente sono su Instabook! Non sa quanto sono felice!"},
+				{ "type":"received", "text": "Mi consiglia tre persone ma io... sono indecisa!"},
+				{ "type":"sent", "text": "Buongiorno signora, la prima amicizia da dare è molto importante e traccia la sua storia su Instabook. E’ una bella responsabilità."},
+				{ "type":"received", "text": "Può aiutarmi a scegliere?"}
+			],
+			"choices": [
+				{"boxText": "Vicina di casa",
+					"messages": [
+						{ "type":"sent", "text": "Potrebbe chiederla a una sua vicina di casa"},
+						{ "type":"received", "text": "Finalmente ci sentiremo più volte del solito! Potrò parlarle e chiederle perché fa un certo broncio quando mi vede!"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 1},
+						{ "type":"statIncrement", "stat":"profit", "value": 1}
+					]
+				},
+				{"boxText": "Nipote",
+					"messages": [
+						{ "type":"sent", "text": "Perché non la manda a suo nipote?"},
+						{ "type":"received", "text": "Passerò più tempo con mio nipote... Spero di non mandare un messaggio mentre è impegnato a giocare"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -1},
+						{ "type":"statIncrement", "stat":"profit", "value": 2}
+					]
+				},
+				{"boxText": "Sceicco Aruba",
+					"messages": [
+						{ "type":"sent", "text": "Conosco un famoso sceicco a cui potrebbe chiedere l'amicizia. Si chiama Aruba."},
+						{ "type":"received", "text": "Un’amicizia nuova... chissà che tipo è questo sceicco! Inizierò mandandogli qualche messaggio..."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -3},
+						{ "type":"statIncrement", "stat":"profit", "value": 3}
+					]
+				}
+			]
+		},
+		{
+			"id": "d_0103",
+			"characterId": "c_01",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":3},
+				{"type":"dialoguePlayed", "id":"d_0102"}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": "Oh Caro! Che tragedia!!! Mi hanno tolto l’amicizia..."},
+				{ "type":"sent", "text": "Oh , buongiorno signora! Cosa succede?"},
+				{ "type":"received", "text": "Si ricorda di ieri? Ero indecisa a chi dare l’amicizia... vado oggi a vedere... non vedo più nessuno... che mondo crudele..."},
+				{ "type":"sent", "text": "Cosa posso fare per lei signora?"},
+				{ "type":"received", "text": "Lei è sempre così gentile... non so più a chi dare la prima amicizia... cosa mi consiglia di fare?"}
+			],
+			"choices": [
+				{"boxText": "Rinunci",
+					"messages": [
+						{ "type":"sent", "text": "Vada a farsi un bel tè e non ci pensi più"},
+						{ "type":"received", "text": "Saggia decisione... una bella tazza di tè mi distrarrà da tutto questo... mi sento già sollevata..."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 1},
+						{ "type":"statIncrement", "stat":"profit", "value": -5}
+					]
+				},
+				{"boxText": "Gliela accetto io",
+					"messages": [
+						{ "type":"sent", "text": "La mandi pure a me."},
+						{ "type":"received", "text": "Lei è troppo gentile... non si deve scomodare troppo... è già tanto che risolve i miei problemi col computer..."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 0},
+						{ "type":"statIncrement", "stat":"profit", "value": -1}
+					]
+				},
+				{"boxText": "Assolutamente Aruba!",
+					"messages": [
+						{ "type":"sent", "text": "Ritenti con il sig. Aruba, lo sceicco. È davvero una persona importante."},
+						{ "type":"received", "text": "Spero che lo sceicco accetti ancora la mia amicizia... continua a mandarmi richieste in inglese ma io non lo capisco... Mio nipote dice che parla solo di conti correnti..."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -5},
+						{ "type":"statIncrement", "stat":"profit", "value": 5}
+					]
+				}
+			]
+		},
+		{
+			"id": "d_0104",
+			"characterId": "c_01",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":4},
+				{"type":"dialoguePlayed", "id":"d_0103"}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": "Caro!!! Ho una nuova amicizia!"},
+				{ "type":"sent", "text": "Oh buongiorno signora! La sento molto felice!"},
+				{ "type":"received", "text": "Un certo Lupin56 mi ha messo dei cuoricini a dei miei post! Ho accettato la sua amicizia! Mi ha mandato dei messaggi in privato!"},
+				{ "type":"sent", "text": "Cosa le ha scritto signora?"},
+				{ "type":"received", "text": "C’è un testo blu sottolineato! Quando ci vado sopra col mouse diventa una manina! Che simpatico! C’è scritto “l4 tua b4nc4” con i numeri!"},
+				{ "type":"received", "text": "Ora però sono confusa! Come posso rispondere?"}
+			],
+			"choices": [
+				{"boxText": "Lo blocchi",
+					"messages": [
+						{ "type":"sent", "text": "Non clicchi e tolga l’amicizia!"},
+						{ "type":"received", "text": "Oh Caro! Non è proprio nelle mie corde essere così rude... togliere l’amicizia ad un amico che invece si dovrebbe conoscere... Ma come sempre mi fido di Lei."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 3},
+						{ "type":"statIncrement", "stat":"profit", "value": -1}
+					]
+				},
+				{"boxText": "Lo insulti",
+					"messages": [
+						{ "type":"sent", "text": "Gli dica che è un ladro."},
+						{ "type":"received", "text": "Non ha idea di quanti messaggi cattivi mi ha scritto... si è arrabbiato così, di colpo... si vede che era una persona di cui non fidarsi."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -1},
+						{ "type":"statIncrement", "stat":"profit", "value": 1}
+					]
+				},
+				{"boxText": "Accetti",
+					"messages": [
+						{ "type":"sent", "text": "Clicchi sopra e metta i suoi dati nel sito."},
+						{ "type":"received", "text": "Sono una signora solerte! Ho scritto tutto, dappertutto! Sembro anziana ma, questo dimostra che sono molto tecnologica! La ringrazio di nuovo!"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -5},
+						{ "type":"statIncrement", "stat":"profit", "value": 5}
+					]
+				}
+			]
+		},
+		{
+			"id": "d_0105",
+			"characterId": "c_01",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":5},
+				{"type":"dialoguePlayed", "id":"d_0104"}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": "Caro!! Il mio primo file scaricato da sola!!!"},
+				{ "type":"sent", "text": " Bisogna festeggiare! Che cosa ha scaricato di bello?"},
+				{ "type":"received", "text": "Il file si chiama “word.exe”!... L’ho letto bene Caro?  Al corso di computer dicevano che era un programma per dattilografare!"},
+				{ "type":"sent", "text": "Oh signora! Stia attenta, non è tutto oro quello che luccica!"},
+				{ "type":"received", "text": "Cosa intende dire Caro?"}
+			],
+			"choices": [
+				{"boxText": "Chieda al nipote",
+					"messages": [
+						{ "type":"sent", "text": "Faccia controllare il file da suo nipote!"},
+						{ "type":"received", "text": "..."},
+						{ "type":"received", "text": "Mio nipote dice che è un virus... questa è bella, anche i computer hanno le malattie... la ringrazio dell’intervento Caro."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 3},
+						{ "type":"statIncrement", "stat":"profit", "value": -3}
+					]
+				},
+				{"boxText": "Usi l'antivirus",
+					"messages": [
+						{ "type":"sent", "text": "Usi il suo antivirus signora!"},
+						{ "type":"received", "text": "Prendo subito l’alcool, e lo spruzzo un po’ sopra. Grazie del consiglio caro. Quei germacci andranno via in un baleno"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -1},
+						{ "type":"statIncrement", "stat":"profit", "value": 0}
+					]
+				},
+				{"boxText": "Deve fare doppio click",
+					"messages": [
+						{ "type":"sent", "text": "Deve cliccarci due volte sopra!"},
+						{ "type":"received", "text": "Oh!! Lo schermo è diventato tutto nero! C’è una scritta che dice “R A N S O M”, mi scusi, non so leggere bene l’inglese... Proverò a spegnere il computer, lei fa sempre così tanto per me e non la voglio disturbare più oggi... a Buon Rendere"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -5},
+						{ "type":"statIncrement", "stat":"profit", "value": 5}
+					]
+				}
+			]
+		},
+		{
+			"id": "d_0106",
+			"characterId": "c_01",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":6},
+				{"type":"dialoguePlayed", "id":"d_0105"}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": "Caro, che cos’è questo??"},
+				{ "type":"sent", "text": "Buongiorno signora... a cosa si sta riferendo?"},
+				{ "type":"received", "text": "Una mia cara amica mi parla in una lingua strana... all’improvviso parla l’inglese... dice cose davvero criptiche."},
+				{ "type":"sent", "text": "Mi legga un po’ cosa scrive."},
+				{ "type":"received", "text": "Mi sforzo per la pronuncia: * hem * DROP APPLI … CATION … INSTA … BOOK , PUNTO AND VIRGOLA."},
+				{ "type":"received", "text": "C'è anche un bottone “Esegui”, è tutto blu!"}
+			],
+			"choices": [
+				{"boxText": "È una trappola",
+					"messages": [
+						{ "type":"sent", "text": "Cancelli subito il messaggio e l’amicizia"},
+						{ "type":"received", "text": "Lei è sempre così previdente!! Non so mai quanto la devo ringraziare... riempirò di cuoricini i suoi messaggi su Instabook, se lo è meritato!"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 5},
+						{ "type":"statIncrement", "stat":"profit", "value": 0}
+					]
+				},
+				{"boxText": "Chiami il nipoter",
+					"messages": [
+						{ "type":"sent", "text": "Mi passi subito suo nipote"},
+						{ "type":"received", "text": "Mio nipote dice di pigiare sopra, è sempre stato curioso. Me lo conferma la sua maestra di Scienze. Chissà cosa succederà poi"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -3},
+						{ "type":"statIncrement", "stat":"profit", "value": 0}
+					]
+				},
+				{"boxText": "Ah beh, se è blu",
+					"messages": [
+						{ "type":"sent", "text": "Prema subito il bottone"},
+						{ "type":"received", "text": "Oh Caro... è sparito tutto, i miei amici, le mie storie, i miei cuori. quando rimettono a posto il sito? Che imbranati!"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -5},
+						{ "type":"statIncrement", "stat":"profit", "value": 0}
+					]
+				}
+			]
+		},
+		{
+			"id": "d_0201",
+			"characterId": "c_02",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":1}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": "*ROAR*"},
+				{ "type":"received", "text": "...hem hem... Buon... buon giorno."},
+				{ "type":"sent", "text": "Uh... buongiorno... chi parla?"},
+				{ "type":"received", "text": "Che t’importaw cosa sonowwrrr... che ti importa come mi chiamowwwrr"},
+				{ "type":"sent", "text": "Ehhhm , è giusto per aiutarla signor… ?"},
+				{ "type":"received", "text": "Mi hanno chiamato Lilli... stupido nome... *roarrr*"},
+				{ "type":"sent", "text": "Signorina Lilli! In cosa posso aiutarla?"},
+				{ "type":"received", "text": "SONO UN MASCHIO, *ROAR*... dimmi... hai accesso alla piantina di questo luogo? Mi sento perso... Ho bisogno di prendere un po’ d’aria... da dove si esce?"}
+			],
+			"choices": [
+				{"boxText": "Dopo le cucine",
+					"messages": [
+						{ "type":"sent", "text": "La porta in fondo dopo le cucine."},
+						{ "type":"received", "text": "Ah! Sento già l’odore dell’aria fresca, ahh libertà."},
+						{ "type":"received", "text": "*ROAR*"},
+						{ "type":"received", "text": "*TUMP TUMP TUMP*"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 1},
+						{ "type":"statIncrement", "stat":"profit", "value": 1}
+					]
+				},
+				{"boxText": "Prima porta a destra",
+					"messages": [
+						{ "type":"sent", "text": "Prima porta a destra."},
+						{ "type":"received", "text": "Qui... q... qui c’è il bagno... dovrò cavarmela con il mio olfatto."},
+						{ "type":"received", "text": "*SNIF SNIF*"},
+						{ "type":"received", "text": "Stupido call center..."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -1},
+						{ "type":"statIncrement", "stat":"profit", "value": -1}
+					]
+				},
+				{"boxText": "Rimanga nella sua cella",
+					"messages": [
+						{ "type":"sent", "text": "Resti dentro la sua celletta."},
+						{ "type":"received", "text": "Tu sei prigioniero come me, non te ne rendi conto, bah...."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -3},
+						{ "type":"statIncrement", "stat":"profit", "value": -1}
+					]
+				}
+			]
+		},
+		{
+			"id": "d_0202",
+			"characterId": "c_02",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":2},
+				{"type":"dialoguePlayed", "id":"d_0201"}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": "*ROAR* Devo aspettare ancora tanto?"},
+				{ "type":"sent", "text": "Signor Lilli! Ha bisogno?"},
+				{ "type":"received", "text": "Sì, Ho bisogno di sapere DOVE SI TROVANO quei brutti ceffi che mi hanno imprigionato. Vanno in giro con camici bianchi e siringhe. Faccia il bravo e mi aiuti."}
+			],
+			"choices": [
+				{"boxText": "Sono in cucina",
+					"messages": [
+						{ "type":"sent", "text": "Si trovano tutti nel cucinino."},
+						{ "type":"received", "text": "*urla disperate*"},
+						{ "type":"received", "text": "*ROAR ROAR*"},
+						{ "type":"received", "text": "*urla d’aiuto*"},
+						{ "type":"received", "text": "He he hem... La ringrazio *gnam gnam* alla prossima."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 5},
+						{ "type":"statIncrement", "stat":"profit", "value": 5}
+					]
+				},
+				{"boxText": "Sono fuori",
+					"messages": [
+						{ "type":"sent", "text": "Sono in giro per l’ora d’aria."},
+						{ "type":"received", "text": "Uuhhhhmmm"},
+						{ "type":"received", "text": "*snif snif*"},
+						{ "type":"received", "text": "Credo che Lei mi stia tirando una burla... Qual è il suo interesse in tutto questo?"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -1},
+						{ "type":"statIncrement", "stat":"profit", "value": 0}
+					]
+				},
+				{"boxText": "Sono scappati",
+					"messages": [
+						{ "type":"sent", "text": "Sono tutti scappati, li ho avvisati io."},
+						{ "type":"received", "text": "Bah... ed io, che aspetto tutto questo tempo, per parlare con uno stupido di un’azienda stupida *roar* si aspetti una ramanzina dal suo capo *roar* quanto odio la parola ramanzina."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -3},
+						{ "type":"statIncrement", "stat":"profit", "value": -3}
+					]
+				}
+			]
+		},
+		{
+			"id": "d_0203",
+			"characterId": "c_02",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":3},
+				{"type":"dialoguePlayed", "id":"d_0202"}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": "*ROAR* COME! ODIO! LE ATTESE!"},
+				{ "type":"sent", "text": "oh, è lei signor Lilli."},
+				{ "type":"received", "text": "È LEI UN CORNO. MI DICA SUBITO DOVE TROVO QUEGLI STUPIDI TURISTI."},
+				{ "type":"received", "text": "Sa, ho necessità di promuovere un... buffet..."},
+				{ "type":"received", "text": "*slurp*... barbecue... *snif snif*..."},
+				{ "type":"received", "text": "Io sarò il cuoco hehe."}
+			],
+			"choices": [
+				{"boxText": "Nella sala Cinema",
+					"messages": [
+						{ "type":"sent", "text": "Sono tutti nella sala Cinema."},
+						{ "type":"received", "text": "Spero che il film “Colazione Da Tiffany” sia di loro gradimento *hihihihi*."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 5},
+						{ "type":"statIncrement", "stat":"profit", "value": 5}
+					]
+				},
+				{"boxText": "Nel recinto dei T-Rex",
+					"messages": [
+						{ "type":"sent", "text": "Li trova nel recinto del sig. Rex"},
+						{ "type":"received", "text": "Ah, sì, l’iracondo... ma non sa con chi ha a che fare... Lo sa? Ha le braccine corte per un motivo: non ha necessità di chiamare questo STUPIDO, CALL, CENTER..."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -3},
+						{ "type":"statIncrement", "stat":"profit", "value": -1}
+					]
+				},
+				{"boxText": "Nella sua cella",
+					"messages": [
+						{ "type":"sent", "text": "La stanno aspettando nella celletta da dove è uscito."},
+						{ "type":"received", "text": "ROAAAAARRRRR!!!"},
+						{ "type":"received", "text": "Spero che lei non esca dal suo cubicolo per il resto della SUA VITA!"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -5},
+						{ "type":"statIncrement", "stat":"profit", "value": -3}
+					]
+				}
+			]
+		},
+		{
+			"id": "d_0204",
+			"characterId": "c_02",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":4},
+				{"type":"dialoguePlayed", "id":"d_0203"}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": "*rumore di parco giochi*"},
+				{ "type":"received", "text": "*mmmmm*"},
+				{ "type":"sent", "text": "Oh buongio..."},
+				{ "type":"received", "text": "SENTA, LA SMETTA CON I CONVENEVOLI. HO FAM..."},
+				{ "type":"received", "text": "Voglio dire, voglio divertirmi un po’. Questo parco è molto grande *rawr* mi dica per favore, dove trovo il parco giochi... e quei simpatici hamburger con due gambe."}
+				],
+			"choices": [
+				{"boxText": "Segua il trenino dei turisti",
+					"messages": [
+						{ "type":"sent", "text": "Segua di nascosto il trenino turisti."},
+						{ "type":"received", "text": "OH OTTIMA IDEA TONTOLONE *ROAR* LA RICHIAMO APPENA POSSO..."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 3},
+						{ "type":"statIncrement", "stat":"profit", "value": 1}
+					]
+				},
+				{"boxText": "Compri un biglietto",
+					"messages": [
+						{ "type":"sent", "text": "Compri un biglietto"},
+						{ "type":"received", "text": "*ROAR* che idiota, non ho una lira... dovrei essere un VIP e passare gratuitamente"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -3},
+						{ "type":"statIncrement", "stat":"profit", "value": 0}
+					]
+				},
+				{"boxText": "Torni nella sua cella",
+					"messages": [
+						{ "type":"sent", "text": "Deve, hem, tornare nella sua celletta."},
+						{ "type":"received", "text": "CI HAI PROVATO, MA IO *ROAR* NON CI CASCO!"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -5},
+						{ "type":"statIncrement", "stat":"profit", "value": -1}
+					]
+				}
+			]
+		},
+		{
+			"id": "d_0205",
+			"characterId": "c_02",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":5},
+				{"type":"dialoguePlayed", "id":"d_0204"}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": "...si pregano i signori passeggeri... le scialuppe di salvataggio..."},
+				{ "type":"sent", "text": "Pronto?"},
+				{ "type":"received", "text": "MI, SENTE? STUPIDO, CALL, CENTERR"},
+				{ "type":"sent", "text": "Ohh signor Lilli, dica!"},
+				{ "type":"received", "text": "*hem hem* mi chiedevo *glub* quando passa la prossima nave? Ho necessità di esplorare il mondo! Chissà cosa c’è la fuori."}
+			],
+			"choices": [
+				{"boxText": "Tra 10 minuti",
+					"messages": [
+						{ "type":"sent", "text": "Salperà tra 10 minuti esatti. Si ricordi il biglietto."},
+						{ "type":"received", "text": "*hehehe ancora non l’ha capito, è proprio TONTO*"},
+						{ "type":"received", "text": "Grrrrrr... grazie"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 3},
+						{ "type":"statIncrement", "stat":"profit", "value": 3}
+					]
+				},
+				{"boxText": "Non accettano animali",
+					"messages": [
+						{ "type":"sent", "text": "Non è un cargo per animali, non l’accetteranno."},
+						{ "type":"received", "text": "Sarò io ad accettare loro, nella mia bocca, stupido call center..."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 0},
+						{ "type":"statIncrement", "stat":"profit", "value": 0}
+					]
+				},
+				{"boxText": "Prenda il bus",
+					"messages": [
+						{ "type":"sent", "text": "Deve prendere il bus. Passa ogni mezz’ora."},
+						{ "type":"received", "text": "*ROAAAAARRRRR* LEI È UN ESSERE INUTILE. Il suo capo mi sentirà."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -5},
+						{ "type":"statIncrement", "stat":"profit", "value": -5}
+					]
+				}
+			]
+		},
+		{
+			"id": "d_0206",
+			"characterId": "c_02",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":6},
+				{"type":"dialoguePlayed", "id":"d_0205"}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": "*ROAR*"},
+				{ "type":"sent", "text": "Oh, la riconosco signor Lilli!"},
+				{ "type":"received", "text": "*hssss* ssì, sono Lillli wwrrr. Sto, viaggiando *hehehe* la nave è vuota."},
+				{ "type":"received", "text": "*roar* mi hanno promosso a prestidigitatore e sono tutti “scomparsi”, uno, alla, volta *roar*"},
+				{ "type":"sent", "text": " Lei è un mago abilissimo signor Lilli!"},
+				{ "type":"received", "text": "Eeehhh già, sono specializzato nell’uso dei coltelli *slurp* Mi dica, quale città meglio si adatta ai miei spettacoli?"}
+			],
+			"choices": [
+				{"boxText": "Hollywood",
+					"messages": [
+						{ "type":"sent", "text": "Che ne dice di Hollywood?"},
+						{ "type":"received", "text": "La terra dei vip, very important pranzi * shhhlurp * mmmmmmhhh * diventerò famoso e mangerò in tutto il mondo."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 5},
+						{ "type":"statIncrement", "stat":"profit", "value": 3}
+					]
+				},
+				{"boxText": "Sahara",
+					"messages": [
+						{ "type":"sent", "text": "Una città chiamata Sahara"},
+						{ "type":"received", "text": "*roar* Il Grande Forno *roar* *shlurp* già mi pregusto dei bei pranzetti"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 1},
+						{ "type":"statIncrement", "stat":"profit", "value": -1}
+					]
+				},
+				{"boxText": "Death Valley",
+					"messages": [
+						{ "type":"sent", "text": "Death Valley"},
+						{ "type":"received", "text": "Che nome *kaff kaff* criptico per un luogo così appartato *hissssss* quante ossa... quanta poca carne... ma dove mi vuole mandare?"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -1},
+						{ "type":"statIncrement", "stat":"profit", "value": -3}
+					]
+				}
+			]
+		}
+	]
+}

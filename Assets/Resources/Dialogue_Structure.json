@@ -5,35 +5,97 @@
 	],	
 	"dialogues": [
 		{
-			"id":"dialogue_001",
+			"id": "dialogue_001",
 			"characterId": "idChar1",
 			"unlockConditions": [
-				{"type":"statEqual", "id":"profit", "value":1000},
-				{"type":"statLower", "id":"profit", "value":1000},
-				{"type":"statLowerEqual", "id":"profit", "value":1000},
-				{"type":"statHigher", "id":"profit", "value":1000},
-				{"type":"statHigherEqual", "id":"profit", "value":1000},
-				{"type":"dialoguePlayed", "id":"dialogue_001"}
+				{
+					"type": "statEqual",
+					"id": "profit",
+					"value": 1000
+				},
+				{
+					"type": "statLower",
+					"id": "profit",
+					"value": 1000
+				},
+				{
+					"type": "statLowerEqual",
+					"id": "profit",
+					"value": 1000
+				},
+				{
+					"type": "statHigher",
+					"id": "profit",
+					"value": 1000
+				},
+				{
+					"type": "statHigherEqual",
+					"id": "profit",
+					"value": 1000
+				},
+				{
+					"type": "dialoguePlayed",
+					"id": "dialogue_001"
+				}
 			],
 			"priority": 1,
 			"messages": [
-				{ "type":"received", "text": "testo1" },
-				{ "type":"sent", "text": "testo2" },
-				{ "type":"received", "text": "testo3" },
-				{ "type":"received", "text": "testo4" },
-				{ "type":"sent", "text": "testo5" },
-				{ "type":"choice", "cases": [
-					{ "boxText": "txt6a",
-							"messages": [
-							{ "type":"received", "text": "testo1" },
-							{ "type":"sent", "text": "testo2" },
-							{ "type":"received", "text": "testo3" },
-							{ "type":"statIncrement", "stat":"satisfation", "value":-2 },
-							{ "type":"statIncrement", "stat":"profit", "value":2 }
-						]
-					}
-				]}
+				{
+					"type": "received",
+					"text": "testo1"
+				},
+				{
+					"type": "sent",
+					"text": "testo2"
+				},
+				{
+					"type": "received",
+					"text": "testo3"
+				},
+				{
+					"type": "received",
+					"text": "testo4"
+				},
+				{
+					"type": "sent",
+					"text": "testo5"
+				}
+			],
+			"choices": [
+				{
+					"boxText": "txt6a",
+					"messages": [
+						{
+							"type": "received",
+							"text": "testo1"
+						},
+						{
+							"type": "sent",
+							"text": "testo2"
+						},
+						{
+							"type": "received",
+							"text": "testo3"
+						},
+						{
+							"type": "statIncrement",
+							"stat": "satisfation",
+							"value": -2
+						},
+						{
+							"type": "statIncrement",
+							"stat": "profit",
+							"value": 2
+						}
+					]
+				}
 			]
+		},
+		{
+			"characterId": "idChar1"
+		},
+		{
+			"characterId": "idChar2"
 		}
 	]
 }
