@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace data {
@@ -26,11 +27,23 @@ namespace data {
 
         [SerializeField]
         private int initValue;
+        public int InitValue { get { return initValue; } }
         private int? actualValue;
         public int value
         {
             get { return actualValue != null ? actualValue.Value : initValue; }
-            set { actualValue = value; }
         }
+        public void setValue(int value)
+        {
+            if (value >= min && value <= max)
+            {
+                actualValue = value;
+                Debug.Log("Stat " + Id + " changed from " + this.value + " to " + value);
+            }
+        }
+        public void incrementValue(int increment) { setValue(this.value + increment); }
+
+
+        public void Initialize (GameData ownerData) { }
     }
 }

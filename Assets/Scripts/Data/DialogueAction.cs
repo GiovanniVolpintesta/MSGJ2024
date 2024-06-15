@@ -4,8 +4,12 @@ using UnityEngine;
 
 namespace data
 {
-    public class DialogueAction
+    public abstract class DialogueAction
     {
-        
+        public abstract void Initialize(GameData ownerData);
+
+        // Executes the action, then returns true if the execution has ended, false otherwise
+        public abstract void execute();
+        public abstract bool isEnded();
     }
 }

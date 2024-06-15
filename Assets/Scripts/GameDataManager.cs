@@ -34,6 +34,8 @@ public class GameDataManager : MonoBehaviour
         {
             DontDestroyOnLoad(this.gameObject);
 
+            Dialogue.ResetDefaultIdGenerator();
+
             using (StreamReader reader = new StreamReader(DialogStructureFilePath))
             {
                 gameData = GameData.createFromJSON(reader.ReadToEnd());
