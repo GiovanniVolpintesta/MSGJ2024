@@ -1,0 +1,29 @@
+{
+	"stats": [
+		{ "id":"profit", "type":"global", "min":1000, "max":1000000, "initValue":50000 },
+		{ "id":"satisfation", "type":"character", "min":1000, "max":1000000, "initValue":50000 },
+	],	
+	"dialogues": [
+		{ "characterId": "idChar1",
+			"unlockCondition":"profit < 1000"
+			"priority": 1
+			"messages": [
+				{ "type":"received", "text": "testo1" },
+				{ "type":"sent", "text": "testo2" },
+				{ "type":"received", "text": "testo3" },
+				{ "type":"received", "text": "testo4" },
+				{ "type":"sent", "text": "testo5" },
+				{ "type":"choice", "cases": [
+					{ "boxText": "txt6a",
+							"messages": [
+							{ "type":"received", "text": "testo1" },
+							{ "type":"sent", "text": "testo2" },
+							{ "type":"received", "text": "testo3" },
+							{ "type":"statsIncrement", "satisfation": -2, "profit": -2 }
+						]
+					}
+				]}
+			],
+		}
+	]
+}
