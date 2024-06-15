@@ -1,10 +1,46 @@
 {
 	"stats": [
-		{ "id":"profit", "isGlobal":"true", "min":1000, "max":1000000, "initValue":50000 },
-		{ "id":"satisfation", "isGlobal":"false", "min":1000, "max":1000000, "initValue":50000 },
+		{ "id":"profit", "isGlobal":"true", "min":10, "max":100, "initValue":50 },
+		{ "id":"satisfation", "isGlobal":"false", "min":10, "max":100, "initValue":50 },
 		{ "id":"day", "isGlobal":"true", "min":1, "max":7, "initValue":1}
 	],	
 	"dialogues": [
+		{
+			"id": "d_0001",
+			"characterId": "c_00",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":1},
+				{"type":"statLowerEqual", "id":"profit", "value":40}
+			],
+			"priority": 1,
+			"messages": [
+				{ "type":"received", "text": "DIECIMILA PUNTI???"},
+				{ "type":"sent", "text": "Buongiorno anche a lei capo."},
+				{ "type":"received", "text": "DIECIMILA STRAMALEDETTI PUNTI???"},
+				{ "type":"sent", "text": "Non la seguo signore."},
+				{ "type":"received", "text": "LE TUE BRAVATE CI SONO COSTATE DIECIMILA PUNTI IN BORSA!"},
+				{ "type":"sent", "text": "Oh… Ma come è possibile?"},
+				{ "type":"received", "text": "NON LO SO!"},
+				{ "type":"received", "text": " MA VEDI DI DARTI UNA REGOLATA!"}
+			]
+		},
+		{
+			"id": "d_0002",
+			"characterId": "c_00",
+			"unlockConditions": [
+				{"type":"statEqual", "id":"day", "value":2},
+				{"type":"statHigherEqual", "id":"profit", "value":60}
+			],
+			"priority": 1,
+			"messages": [
+				{ "type":"received", "text": "Buon Martedì Grasso!"},
+				{ "type":"sent", "text": "Ma signore… Oggi non è martedì grasso."},
+				{ "type":"received", "text": "E invece sì."},
+				{ "type":"received", "text": "Le tue scelte ci hanno ingrassato il portafogli."},
+				{ "type":"sent", "text": "Continua così"},
+				{ "type":"received", "text": "Grazie signore."}
+			]
+		},
 		{
 			"id": "d_0101",
 			"characterId": "c_01",
