@@ -1,7 +1,7 @@
 {
 	"stats": [
-		{ "id":"profit", "type":"global", "min":1000, "max":1000000, "initValue":50000 },
-		{ "id":"satisfation", "type":"character", "min":1000, "max":1000000, "initValue":50000 },
+		{ "id":"profit", "isGlobal":"true", "min":1000, "max":1000000, "initValue":50000 },
+		{ "id":"satisfation", "isGlobal":"false", "min":1000, "max":1000000, "initValue":50000 },
 	],	
 	"dialogues": [
 		{ "characterId": "idChar1",
