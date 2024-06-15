@@ -1,21 +1,21 @@
 {
 	"stats": [
 		{ "id":"profit", "isGlobal":"true", "min":1000, "max":1000000, "initValue":50000 },
-		{ "id":"satisfation", "isGlobal":"false", "min":1000, "max":1000000, "initValue":50000 },
+		{ "id":"satisfation", "isGlobal":"false", "min":1000, "max":1000000, "initValue":50000 }
 	],	
 	"dialogues": [
 		{
-			"id":"dialogue_001"
+			"id":"dialogue_001",
 			"characterId": "idChar1",
 			"unlockConditions": [
-				{"type":"statEqual", "id":"profit", "value":1000}
-				{"type":"statLower", "id":"profit", "value":1000}
-				{"type":"statLowerEqual", "id":"profit", "value":1000}
-				{"type":"statHigher", "id":"profit", "value":1000}
-				{"type":"statHigherEqual", "id":"profit", "value":1000}
+				{"type":"statEqual", "id":"profit", "value":1000},
+				{"type":"statLower", "id":"profit", "value":1000},
+				{"type":"statLowerEqual", "id":"profit", "value":1000},
+				{"type":"statHigher", "id":"profit", "value":1000},
+				{"type":"statHigherEqual", "id":"profit", "value":1000},
 				{"type":"dialoguePlayed", "id":"dialogue_001"}
 			],
-			"priority": 1
+			"priority": 1,
 			"messages": [
 				{ "type":"received", "text": "testo1" },
 				{ "type":"sent", "text": "testo2" },
@@ -28,12 +28,12 @@
 							{ "type":"received", "text": "testo1" },
 							{ "type":"sent", "text": "testo2" },
 							{ "type":"received", "text": "testo3" },
-							{ "type":"statIncrement", "stat":"satisfation", "value":-2 }
+							{ "type":"statIncrement", "stat":"satisfation", "value":-2 },
 							{ "type":"statIncrement", "stat":"profit", "value":2 }
 						]
 					}
 				]}
-			],
+			]
 		}
 	]
 }
