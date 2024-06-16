@@ -111,7 +111,7 @@ namespace data
         public bool dialogueCanBeUnlocked(string dialogueId)
         {
             // TODO
-            return false;
+            return true;
         }
     }
 
