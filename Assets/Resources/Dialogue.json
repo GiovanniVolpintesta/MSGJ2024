@@ -42,6 +42,60 @@
 			]
 		},
 		{
+			"id": "d_0003",
+			"characterId": "c_00",
+			"unlockConditions": [
+				{"type":"dialoguePlayed", "id":"d_0205"}
+			],
+			"priority": 1,
+			"messages": [
+				{ "type":"received", "text": "Ehi! Come sta andando?"},
+				{ "type":"sent", "text": "Tutto bene capo."},
+				{ "type":"received", "text": "Ottimo, ottimo."},
+				{ "type":"received", "text": "Oh, alla fine il signor Dilophosaurus è riuscito a salire a bordo."},
+				{ "type":"received", "text": "..."}
+			]
+		},
+		{
+			"id": "d_0004",
+			"characterId": "c_00",
+			"unlockConditions": [
+				{"type":"statLowerEqual", "id":"profit", "value":25},
+				{"type":"dialoguePlayed", "id":"d_0303"}
+			],
+			"priority": 1,
+			"messages": [
+				{ "type":"received", "text": "Ehi, hai sentito del furto?"},
+				{ "type":"sent", "text": "Intende la rapina del dottor..."},
+				{ "type":"received", "text": "INTENDO IL FURTO CHE TU STAI FACENDO!"},
+				{ "type":"sent", "text": "Ma signore…"},
+				{ "type":"received", "text": "MA SIGNORE UN CORNO!"},
+				{ "type":"received", "text": "Vedi di regolarti o sei licenziato!"}
+			]
+		},
+		{
+			"id": "d_0005",
+			"characterId": "c_00",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"profit", "value":75},
+				{"type":"dialoguePlayed", "id":"d_0104"},
+				{"type":"dialoguePlayed", "id":"d_0201"},
+				{"type":"dialoguePlayed", "id":"d_0303"}
+			],
+			"priority": 1,
+			"messages": [
+				{ "type":"received", "text": "Mi hai salvato la vita, ragazzo!"},
+				{ "type":"sent", "text": "In che senso?"},
+				{ "type":"received", "text": "Prima un tizio su Instabook mi clona le carte..."},
+				{ "type":"received", "text": "Poi un pazzo rade al suolo la mia banca..."},
+				{ "type":"received", "text": "E infine le azioni dell’Early Jurassicland calano a picco..."},
+				{ "type":"sent", "text": "Oh cavolo. Mi dispiace tanto signore."},
+				{ "type":"received", "text": "Oh no! Tu mi hai salvato. Il tuo lavoro mi sta facendo guadagnare come mai prima d’ora"},
+				{ "type":"received", "text": "Stai andando meglio di quanto potessi mai sperare"},
+				{ "type":"sent", "text": "Ehm grazie... credo."}
+			]
+		}
+		{
 			"id": "d_0101",
 			"characterId": "c_01",
 			"unlockConditions": [
@@ -448,7 +502,7 @@
 				{ "type":"sent", "text": "Oh buongio..."},
 				{ "type":"received", "text": "SENTA, LA SMETTA CON I CONVENEVOLI. HO FAM..."},
 				{ "type":"received", "text": "Voglio dire, voglio divertirmi un po’. Questo parco è molto grande *rawr* mi dica per favore, dove trovo il parco giochi... e quei simpatici hamburger con due gambe."}
-				],
+			],
 			"choices": [
 				{"boxText": "Segua il trenino dei turisti",
 					"messages": [
@@ -558,6 +612,284 @@
 						{ "type":"received", "text": "Che nome *kaff kaff* criptico per un luogo così appartato *hissssss* quante ossa... quanta poca carne... ma dove mi vuole mandare?"},
 						{ "type":"statIncrement", "stat":"satisfation", "value": -1},
 						{ "type":"statIncrement", "stat":"profit", "value": -3}
+					]
+				}
+			]
+		},
+		{
+			"id": "d_0301",
+			"characterId": "c_03",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":1}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": "Pronto... c’è nessuno?"},
+				{ "type":"sent", "text": " Sì pronto? Salve, come posso aiutarla?"},
+				{ "type":"received", "text": "Oh ciao voce dalla cornetta. Avrei un problema."},
+				{ "type":"received", "text": "Sto cercando di scrivere la chiocciola ma non va."}
+			],
+			"choices": [
+				{"boxText": "Alt Dx",
+					"messages": [
+						{ "type":"sent", "text": "Ha provato con Alt Destro?"},
+						{ "type":"received", "text": "Oh ma certo ma certo..."},
+						{ "type":"received", "text": "Grazie voce misteriosa."}
+						{ "type":"statIncrement", "stat":"satisfation", "value": 1},
+						{ "type":"statIncrement", "stat":"profit", "value": 0}
+					]
+				},
+				{"boxText": "La copi e incolli",
+					"messages": [
+						{ "type":"sent", "text": "Potrebbe copiarla da qualche altra parte."},
+						{ "type":"received", "text": "NON HO MAI COPIATO DAI TEMPI DELL’ASILO, NON INIZIERÒ ORA!"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -1},
+						{ "type":"statIncrement", "stat":"profit", "value": -2}
+					]
+				},
+				{"boxText": "Non serve",
+					"messages": [
+						{ "type":"sent", "text": "Non serve. Se davvero la cercano la chiameranno."},
+						{ "type":"received", "text": "Oh sì, sei proprio saggia voce della cornetta."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 0},
+						{ "type":"statIncrement", "stat":"profit", "value": 0}
+					]
+				}
+			]
+		},
+		{
+			"id": "d_0302",
+			"characterId": "c_03",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":2},
+				{"type":"dialoguePlayed", "id":"d_0301"}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": "Ehi voce… ho problemi con la rete."},
+				{ "type":"sent", "text": "Oh si certo. Mi dica pure."},
+				{ "type":"received", "text": "Ecco… ero collegato da un amico, ma per errore deve aver cambiato password della rete."},
+				{ "type":"received", "text": "Cioé non è proprio un mio amico..."}
+			],
+			"choices": [
+				{"boxText": "Proviamo la cit.",
+					"messages": [
+						{ "type":"sent", "text": " Provi con franksmettiladiscroccareinternet."},
+						{ "type":"received", "text": "Grande Giove!"},
+						{ "type":"received", "text": "Sei un genio!"},
+						{ "type":"received", "text": "Cioé, io sono un genio. Tu sei solo una voce nella mia testa."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 3},
+						{ "type":"statIncrement", "stat":"profit", "value": 3}
+					]
+				},
+				{"boxText": "Non posso aiutarla",
+					"messages": [
+						{ "type":"sent", "text": "Mi dispiace ma non posso aiutarla ad hackerare la rete dei suoi vicini."},
+						{ "type":"received", "text": "Bah! Tutti che cercano di limitare il mio genio."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -2},
+						{ "type":"statIncrement", "stat":"profit", "value": -2}
+					]
+				},
+				{"boxText": "Stacchi un po'",
+					"messages": [
+						{ "type":"sent", "text": "Perché non si legge un libro?"},
+						{ "type":"received", "text": "Ho letto tutti i libri."},
+						{ "type":"sent", "text": "Ne compri altri."},
+						{ "type":"received", "text": "Ho letto tutti i libri… DEL MONDO!"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -1},
+						{ "type":"statIncrement", "stat":"profit", "value": -3}
+					]
+				}
+			]
+		},
+		{
+			"id": "d_0303",
+			"characterId": "c_03",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":3},
+				{"type":"dialoguePlayed", "id":"d_0302"}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": " Ehi voce… ci sei?"},
+				{ "type":"sent", "text": "Dr. Stone, come posso aiutarla?"},
+				{ "type":"received", "text": " Puoi anche smetterla di darmi del Lei. Sei una voce nella mia testa, possiamo considerarci abbastanza intimi."},
+				{ "type":"sent", "text": "Signore, non sono una voce nella sua testa."},
+				{ "type":"received", "text": "Va bene va bene! Continua pure a darmi del Lei."},
+				{ "type":"received", "text": "Ti cercavo perché mi serviva il tuo aiuto con un prelievo."},
+				{ "type":"sent", "text": "Ok, come posso aiutarla?"},
+				{ "type":"received", "text": "Sto cercando di prelevare dei soldi, ma non riesco ad accedervi. Cosa mi consigli di fare?"}
+			],
+			"choices": [
+				{"boxText": "Il Pin è corretto?",
+					"messages": [
+						{ "type":"sent", "text": "È sicuro di aver inserito il codice giusto?"},
+						{ "type":"received", "text": "Oh ma certo il codice! Me ne ero dimenticato."},
+						{ "type":"received", "text": "*rumore di esplosioni*"},
+						{ "type":"received", "text": "*grida d’aiuto*"},
+						{ "type":"received", "text": "DAMMI IL CODICE DELLA CASSAFORTE! MUOVITI!"},
+						{ "type":"received", "text": "..."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 5},
+						{ "type":"statIncrement", "stat":"profit", "value": 5}
+					]
+				},
+				{"boxText": "Il furto è sbagliato",
+					"messages": [
+						{ "type":"sent", "text": "Non posso aiutarla a prelevare soldi non suoi."},
+						{ "type":"received", "text": "Certo che per essere nella testa di un genio sei proprio stupida."},
+						{ "type":"received", "text": "*rumore di esplosioni*"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -3},
+						{ "type":"statIncrement", "stat":"profit", "value": 3}
+					]
+				},
+				{"boxText": "Tiri fuori il ferro",
+					"messages": [
+						{ "type":"sent", "text": "Di solito con le pistole funziona sempre."},
+						{ "type":"received", "text": "Oh no! Ho solo della dinamite."},
+						{ "type":"received", "text": "Vabbé pazienza. Proverò un’altra volta."},
+						{ "type":"received", "text": "*rumore di esplosioni*"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 0},
+						{ "type":"statIncrement", "stat":"profit", "value": 1}
+					]
+				}
+			]
+		},
+		{
+			"id": "d_0304",
+			"characterId": "c_03",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":4},
+				{"type":"dialoguePlayed", "id":"d_0303"}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": "Voce ho bisogno di aiuto."},
+				{ "type":"sent", "text": "Certo signore, mi dica pure."},
+				{ "type":"received", "text": "Ho costruito un raggio della morte, ma non sta funzionando."},
+				{ "type":"received", "text": "Ho provato a sparare a dei teneri cagnolini, ma sono tutti vivi e vegeti. Non capisco dove sia il problema."}
+			],
+			"choices": [
+				{"boxText": "Poveri cagnolini",
+					"messages": [
+						{ "type":"sent", "text": "Non può sparare a dei teneri cagnolini!"},
+						{ "type":"received", "text": "E perché no?"},
+						{ "type":"received", "text": "Ah ma certo! Il raggio funziona solo con gli umani!"},
+						{ "type":"received", "text": "Grazie voce. Adesso devo solo trovare un parco giochi."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 5},
+						{ "type":"statIncrement", "stat":"profit", "value": 5}
+					]
+				},
+				{"boxText": "Non lo faccia",
+					"messages": [
+						{ "type":"sent", "text": "Forse potrebbe evitare di usare un raggio della morte."},
+						{ "type":"received", "text": "Eh lo so. Sono più tipo da raggio laser."},
+						{ "type":"received", "text": " Volevo solo provare qualcosa di nuovo. Vabbè, ora lo metto via."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 1},
+						{ "type":"statIncrement", "stat":"profit", "value": -3}
+					]
+				},
+				{"boxText": "Spegni e riaccendi",
+					"messages": [
+						{ "type":"sent", "text": "Provi a spegnere e riaccendere."},
+						{ "type":"received", "text": "Stupida voce."},
+						{ "type":"received", "text": "È la prima cosa che ho fatto."},
+						{ "type":"received", "text": "A questo punto me la cavo da solo."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -3},
+						{ "type":"statIncrement", "stat":"profit", "value": -3}
+					]
+				}
+			]
+		},
+		{
+			"id": "d_0305",
+			"characterId": "c_03",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":5},
+				{"type":"dialoguePlayed", "id":"d_0304"}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": "VOCE!!!"},
+				{ "type":"sent", "text": "Eh! Oh! Che succede???"},
+				{ "type":"received", "text": "Ho avuto la più geniale idea di sempre! E ho bisogno di un tuo consiglio."},
+				{ "type":"sent", "text": "Oh... ok mi dica."},
+				{ "type":"received", "text": "Ho intenzione di rubare il Monte Ceneri."}
+			],
+			"choices": [
+				{"boxText": "Come posso aiutarla?",
+					"messages": [
+						{ "type":"sent", "text": "Eh che tipo di consiglio vuole da me?"},
+						{ "type":"received", "text": "Ho un po’ di fame, ma non so che pizza prendere."},
+						{ "type":"sent", "text": "Ehm… forse una quattro stagioni?"},
+						{ "type":"received", "text": "Perfetto! Grazie mille Voce!"},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 3},
+						{ "type":"statIncrement", "stat":"profit", "value": 3}
+					]
+				},
+				{"boxText": "Non può farlo",
+					"messages": [
+						{ "type":"sent", "text": "Ma non può rubare il Monte Ceneri!"},
+						{ "type":"received", "text": "Certo che posso. Dovresti saperlo visto che vivi nella mia testa."},
+						{ "type":"received", "text": "A pensarci bene forse non mi puoi aiutare con quello che mi serve."},
+						{ "type":"received", "text": "Ci sentiamo, alla prossima."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -3},
+						{ "type":"statIncrement", "stat":"profit", "value": 0}
+					]
+				},
+				{"boxText": "E il monte Everest?",
+					"messages": [
+						{ "type":"sent", "text": "Perché non il Monte Everest a questo punto?"},
+						{ "type":"received", "text": "Sì certo. E dove pensi possa metterlo?"},
+						{ "type":"received", "text": "Forse è vero che non sei una voce nella mia testa. Sei troppo stupido."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -5},
+						{ "type":"statIncrement", "stat":"profit", "value": 0}
+					]
+				}
+			]
+		},
+		{
+			"id": "d_0306",
+			"characterId": "c_03",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":6},
+				{"type":"dialoguePlayed", "id":"d_0305"}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": "Ciao voce... ho una sorpresa per te."},
+				{ "type":"sent", "text": "Aspetti. Come una sorpresa per me?"},
+				{ "type":"sent", "text": "Oh sì. Ho appena creato un dispositivo con cui controllare le menti delle persone."},
+				{ "type":"sent", "text": " In questo modo avrai tante altre voci a farti compagnia."}
+			],
+			"choices": [
+				{"boxText": "Oh che bello",
+					"messages": [
+						{ "type":"sent", "text": "Oh, è proprio un pensiero carino. Grazie."},
+						{ "type":"received", "text": "Sapevo che ti sarebbe piaciuto."},
+						{ "type":"received", "text": "Adesso l’accendo."},
+						{ "type":"received", "text": "*rumore di esplosioni incontrollate*"},
+						{ "type":"received", "text": "*urla terrorizzate*"},
+						{ "type":"received", "text": "Oh per Giove! Temo che dovremo riprovarci un’altra volta."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 5},
+						{ "type":"statIncrement", "stat":"profit", "value": 5}
+					]
+				},
+				{"boxText": "Non voglio compagnia",
+					"messages": [
+						{ "type":"sent", "text": "Non voglio compagnia!"},
+						{ "type":"received", "text": "Oh sei una voce timida."},
+						{ "type":"received", "text": "Capisco, allora non lo userò tranquilla."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": 1},
+						{ "type":"statIncrement", "stat":"profit", "value": -5}
+					]
+				},
+				{"boxText": "Non sono una voce",
+					"messages": [
+						{ "type":"sent", "text": "Non sono una voce!"},
+						{ "type":"received", "text": "Per essere nella mia testa sei davvero testarda."},
+						{ "type":"received", "text": "..."},
+						{ "type":"statIncrement", "stat":"satisfation", "value": -3},
+						{ "type":"statIncrement", "stat":"profit", "value": -5}
 					]
 				}
 			]
