@@ -12,7 +12,8 @@ namespace data
         public string Id { get { return id; } }
 
         [SerializeField]
-        private Texture2D SatisfationAvatarTexture;
+        private Texture2D avatarTexture;
+        public Texture2D AvatarTexture { get { return avatarTexture; } }
 
         [SerializeField]
         private Color SatisfationBarColor;

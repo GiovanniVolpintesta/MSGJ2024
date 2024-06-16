@@ -41,7 +41,8 @@ public class GameDataManager : MonoBehaviour
 
             using (StreamReader reader = new StreamReader(DialogStructureFilePath))
             {
-                gameData = GameData.createFromJSON(reader.ReadToEnd());
+                GameData.createFromJSON(reader.ReadToEnd());
+                gameData = GameData.Instance;
                 gameData.Initialize(CharactersData);
             }
         }

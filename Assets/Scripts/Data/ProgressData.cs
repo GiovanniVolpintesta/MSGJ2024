@@ -6,6 +6,8 @@ using UnityEngine;
 
 namespace data
 {
+    public delegate void OnValueChanged (float OldValue, float NewValue);
+
     [System.Serializable]
     public class ProgressData
     {
@@ -155,6 +157,8 @@ namespace data
     [System.Serializable]
     public class StatProgressData
     {
+        public event OnValueChanged onValueChanged;
+
         [SerializeField]
         private string id;
         public string Id { get { return id; } }
@@ -185,8 +189,10 @@ namespace data
         {
             if (value >= min && value <= max)
             {
+                int oldValue = this.value;
                 this.value = value;
-                Debug.Log("Stat " + Id + " changed from " + this.value + " to " + value);
+                Debug.Log("Stat " + Id + " changed from " + oldValue + " to " + value);
+                onValueChanged.Invoke(oldValue, value);
             }
         }
 

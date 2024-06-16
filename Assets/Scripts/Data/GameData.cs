@@ -8,6 +8,9 @@ namespace data
     [System.Serializable]
     public class GameData
     {
+        private static GameData instance;
+        public static GameData Instance { get { return instance; } }
+
         [SerializeField]
         private Stat[] stats;
 
@@ -15,17 +18,15 @@ namespace data
         private Dialogue[] dialogues;
 
         private CharactersData charactersData;
-
         [SerializeField]
         private ProgressData progressData;
         public ProgressData ProgressData { get { return progressData; } }
 
         private bool initialized = false;
 
-        static public GameData createFromJSON(string jsonString)
+        static public void createFromJSON(string jsonString)
         {
-            GameData gameData = JsonUtility.FromJson<GameData>(jsonString);            
-            return gameData;
+            instance = JsonUtility.FromJson<GameData>(jsonString);
         }
 
         public void Initialize(CharactersData charactersData)
@@ -104,6 +105,16 @@ namespace data
         public Dialogue findDialogue(string id)
         {
             foreach (Dialogue e in dialogues) if (e.Id.Equals(id)) return e;
+            return null;
+        }
+
+        public CharacterConsts findCharacterConsts(string characterId)
+        {
+            foreach (CharacterConsts e in charactersData.CharacterConst)
+            {
+                if (e.Id.Equals(characterId))
+                    return e;
+            }
             return null;
         }
 
