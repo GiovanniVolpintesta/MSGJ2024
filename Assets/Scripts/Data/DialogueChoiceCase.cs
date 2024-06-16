@@ -27,9 +27,9 @@ namespace data
             return null;
         }
 
-        public void Initialize(GameData ownerData)
+        public void Initialize(Dialogue ownerDialogue, GameData ownerData)
         {
-            dialogueActions = DialogueActionInitializer.createDialogActionList(messages, ownerData);
+            dialogueActions = DialogueActionInitializer.createDialogActionList(messages, ownerDialogue, ownerData);
         }
 
         public void execute()

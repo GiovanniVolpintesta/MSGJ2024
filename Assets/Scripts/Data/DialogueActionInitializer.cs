@@ -45,7 +45,7 @@ public class DialogueActionInitializer
         throw new NotImplementedException();
     }
 
-    public static DialogueAction[] createDialogActionList(DialogueActionInitializer[] initializers, GameData ownerData)
+    public static DialogueAction[] createDialogActionList(DialogueActionInitializer[] initializers, Dialogue ownerDialogue, GameData ownerData)
     {
         List<DialogueAction> result = new List<DialogueAction>();
         if (initializers != null)
@@ -57,7 +57,7 @@ public class DialogueActionInitializer
                     DialogueAction action = e.createDialogueAction();
                     if (action != null)
                     {
-                        action.Initialize(ownerData);
+                        action.Initialize(ownerDialogue, ownerData);
                         result.Add(action);
                     }
                 }

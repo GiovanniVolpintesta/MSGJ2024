@@ -10,14 +10,15 @@ namespace data
     {
         private string statId;
         private int value;
-        private Stat stat;
+
+        private StatProgressData statProgress;
 
         private bool executed;
 
         public IncrementStatAction(string statId, int value)
         {
             this.statId = statId;
-            stat = null;
+            statProgress = null;
             this.value = value;
         }
 
@@ -25,20 +26,26 @@ namespace data
         {
             if (!isEnded())
             {
-                stat.incrementValue(value);
+                statProgress.incrementValue(value);
                 executed = true;
-                Debug.Log("Incrementing '" + stat.Id + "' stat by '" + stat.value + "'");
-            }
-            else
-            {
-                Debug.LogWarning("Stat " + statId + " increment skipped because this action has already been executed.");
+                Debug.Log("Incrementing '" + statProgress.Id + "' stat by '" + value + "'");
             }
         }
 
-        public override void Initialize(GameData ownerData)
+        protected override void Initialize(GameData ownerData)
         {
-            stat = ownerData.findStat(statId);
-            if (stat == null) Debug.LogError("Stat " + statId + " has not been found.");
+            Stat statConsts = ownerData.findStat(statId);
+            if (statConsts.IsCharacterStat())
+            {
+                statProgress = ownerData.ProgressData.findCharData(OwnerDialogue.CharacterId).findStat(statId);
+            }
+            else if (statConsts.IsGlobalStat()) 
+            {
+                statProgress = ownerData.ProgressData.findGlobalStat(statId);
+            }
+
+            if (statProgress == null) Debug.LogError("Stat progress for stat '" + statId + "' has not been found.");
+
             executed = false;
         }
 

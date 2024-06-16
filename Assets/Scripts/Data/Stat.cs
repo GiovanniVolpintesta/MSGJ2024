@@ -28,21 +28,6 @@ namespace data {
         [SerializeField]
         private int initValue;
         public int InitValue { get { return initValue; } }
-        private int? actualValue;
-        public int value
-        {
-            get { return actualValue != null ? actualValue.Value : initValue; }
-        }
-        public void setValue(int value)
-        {
-            if (value >= min && value <= max)
-            {
-                actualValue = value;
-                Debug.Log("Stat " + Id + " changed from " + this.value + " to " + value);
-            }
-        }
-        public void incrementValue(int increment) { setValue(this.value + increment); }
-
 
         public void Initialize (GameData ownerData) { }
     }

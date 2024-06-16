@@ -25,24 +25,8 @@ namespace data
 
         [SerializeField]
         private int priority = 0;
-        public int Priority { get { return priority; } }
-
-        [SerializeField]
-        private int unlockTime = -1;
-        public int UnlockTime { get { return unlockTime; } }
-        public bool Unlocked { get { return unlockTime >= 0; } }
-        public void tryUnlock(Stat[] stats, int unlockTime)
-        {
-            if (canUnlock(stats, unlockTime))
-            {
-                this.unlockTime = unlockTime;
-            }
-        }
-        private bool canUnlock (Stat[] stats, int unlockTime)
-        {
-            return false; // TODO unlock;
-        }
-
+        public int DialoguePriority { get { return priority; } }
+      
         [SerializeField]
         private DialogueActionInitializer[] messages;
         private DialogueAction[] dialogueActions;
@@ -50,7 +34,8 @@ namespace data
         [SerializeField]
         DialogueChoiceCase[] choices;
 
-        [SerializeField]
+        DialogueProgressData dialogueProgress;
+
         private int chosenCaseIndex;
         public int ChosenCaseIndex
         {
@@ -96,12 +81,13 @@ namespace data
 
         public void Initialize(GameData ownerData)
         {
-            dialogueActions = DialogueActionInitializer.createDialogActionList(messages, ownerData);
+            dialogueActions = DialogueActionInitializer.createDialogActionList(messages, this, ownerData);
             if (choices != null)
             {
-                foreach (DialogueChoiceCase c in choices) if (c != null) c.Initialize(ownerData);
+                foreach (DialogueChoiceCase c in choices) if (c != null) c.Initialize(this, ownerData);
             }
             chosenCaseIndex = -1;
+            dialogueProgress = ownerData.ProgressData.findDialogue(Id);
         }
 
         public void execute()
@@ -138,7 +124,7 @@ namespace data
                 }
                 if (isEnded())
                 {
-                    Debug.Log("Ended dialog: " + Id);
+                    dialogueProgress.setEnded();
                 }
             }
         }

@@ -1,0 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace data
+{
+    [System.Serializable]
+    public class CharacterConsts
+    {
+        [SerializeField]
+        private string id;
+        public string Id { get { return id; } }
+
+        [SerializeField]
+        private Texture2D SatisfationAvatarTexture;
+
+        [SerializeField]
+        private Color SatisfationBarColor;
+
+        [SerializeField]
+        private Texture2D SatisfationBarForeground;
+    }
+}

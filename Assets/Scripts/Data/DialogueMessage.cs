@@ -22,7 +22,7 @@ namespace data
             this.text = text;
         }
 
-        public override void Initialize(GameData ownerData)
+        protected override void Initialize(GameData ownerData)
         {
             executed = false;
         }

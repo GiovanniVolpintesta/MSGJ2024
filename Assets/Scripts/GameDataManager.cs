@@ -10,6 +10,9 @@ public class GameDataManager : MonoBehaviour
     private string DialogStructureFilePath;
 
     [SerializeField]
+    private CharactersData CharactersData;
+
+    [SerializeField]
     private GameData gameData;
 
     // Start is called before the first frame update
@@ -39,6 +42,7 @@ public class GameDataManager : MonoBehaviour
             using (StreamReader reader = new StreamReader(DialogStructureFilePath))
             {
                 gameData = GameData.createFromJSON(reader.ReadToEnd());
+                gameData.Initialize(CharactersData);
             }
         }
     }
