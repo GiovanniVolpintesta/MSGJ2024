@@ -94,7 +94,7 @@
 				{ "type":"received", "text": "Stai andando meglio di quanto potessi mai sperare"},
 				{ "type":"sent", "text": "Ehm grazie... credo."}
 			]
-		}
+		},
 		{
 			"id": "d_0101",
 			"characterId": "c_01",
@@ -634,7 +634,7 @@
 					"messages": [
 						{ "type":"sent", "text": "Ha provato con Alt Destro?"},
 						{ "type":"received", "text": "Oh ma certo ma certo..."},
-						{ "type":"received", "text": "Grazie voce misteriosa."}
+						{ "type":"received", "text": "Grazie voce misteriosa."},
 						{ "type":"statIncrement", "stat":"satisfation", "value": 1},
 						{ "type":"statIncrement", "stat":"profit", "value": 0}
 					]
