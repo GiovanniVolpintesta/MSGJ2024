@@ -61,4 +61,8 @@ MonoBehaviour:
     avatarTexture: {fileID: 0}
     SatisfationBarColor: {r: 0, g: 0, b: 0, a: 0}
     SatisfationBarForeground: {fileID: 0}
+  - id: c_03
+    avatarTexture: {fileID: 0}
+    SatisfationBarColor: {r: 0, g: 0, b: 0, a: 0}
+    SatisfationBarForeground: {fileID: 0}
   playerCharacterId: Player
