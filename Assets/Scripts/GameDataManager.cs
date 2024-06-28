@@ -10,6 +10,9 @@ public class GameDataManager : MonoBehaviour
     private string DialogStructureFilePath;
 
     [SerializeField]
+    private string firstDialogueId;
+
+    [SerializeField]
     private CharactersData CharactersData;
 
     [SerializeField]
@@ -43,7 +46,7 @@ public class GameDataManager : MonoBehaviour
             {
                 GameData.createFromJSON(reader.ReadToEnd());
                 gameData = GameData.Instance;
-                gameData.Initialize(CharactersData);
+                gameData.Initialize(CharactersData, firstDialogueId);
             }
         }
     }

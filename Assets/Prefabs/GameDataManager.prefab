@@ -45,7 +45,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialogStructureFilePath: Assets/Resources/Dialogue.json
+  firstDialogueId: d_0001
   CharactersData: {fileID: 2512441397753893319, guid: 03f48646dc402f747baf003c5341a0c1, type: 3}
   gameData:
     stats: []
     dialogues: []
+    progressData:
+      charactersData: []
+      globalStats: []
+      dialogues: []
+      currentDialogueId: 
+      playedDialogues: 0
