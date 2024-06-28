@@ -30,6 +30,8 @@ public class StatBarController : MonoBehaviour
     private float MinValue;
     private float MaxValue;
 
+    private bool isStarted = false;
+
     private void Start()
     {
         if (statId != null && !statId.Equals(""))
@@ -59,11 +61,15 @@ public class StatBarController : MonoBehaviour
 
             Bind();
         }
+        isStarted = true;
     }
 
     private void OnEnable()
     {
-        Bind();
+        if (isStarted)
+        {
+            Bind();
+        }
     }
 
     private void OnDisable() 
