@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.Serialization;
@@ -31,9 +34,10 @@ namespace data
         [SerializeField]
         private DialogueActionInitializer[] messages;
         private DialogueAction[] dialogueActions;
+        public ICollection<DialogueAction> DialogueActions { get { return dialogueActions.AsReadOnlyCollection(); } }
 
         [SerializeField]
-        DialogueChoiceCase[] choices;
+        private DialogueChoiceCase[] choices;
         public string[] getChoicesMessages()
         {
             List<string> msgs = new List<string>();
@@ -47,10 +51,9 @@ namespace data
             return msgs.ToArray();
         }
 
-        DialogueProgressData dialogueProgress;
+        private DialogueProgressData dialogueProgress;
 
         private int chosenCaseIndex;
-        public int ChosenCaseIndex { get { return chosenCaseIndex; } }
         public void SetChoiceSelection(int index)
         {
             if (areDialogueActionsEnded())
@@ -86,7 +89,7 @@ namespace data
             return null;
         }
 
-        public DialogueAction getActionToExecute()
+        private DialogueAction getDialogueActionToExecute()
         {
             foreach (DialogueAction action in dialogueActions)
             {
@@ -107,9 +110,40 @@ namespace data
             dialogueProgress = ownerData.ProgressData.findDialogue(Id);
         }
 
+        public bool isUnlocked()
+        {
+            return dialogueProgress != null && dialogueProgress.IsUnlocked;
+        }
+
+        public bool isStarted()
+        {
+            if (dialogueActions.Length > 0)
+            {
+                return dialogueActions[0].isEnded();
+            }
+            else
+            {
+                DialogueChoiceCase chosenCase = getChosenCase();
+                if (chosenCase != null)
+                    return chosenCase.DialogueActions.Count > 0 && chosenCase.DialogueActions.First().isEnded();
+                else
+                    return false;
+            }
+        }
+
+        public bool isEnded()
+        {
+            return dialogueProgress != null && dialogueProgress.IsEnded;
+        }
+
+        public bool canExecute()
+        {
+            return isUnlocked() && !isEnded();
+        }
+
         public void execute()
         {
-            if (!isEnded())
+            if (canExecute())
             {
                 Debug.Log("Executing dialog: " + Id);
                 if (!areDialogueActionsEnded())
@@ -117,7 +151,7 @@ namespace data
                     DialogueAction actionToExecute;
                     do
                     {
-                        actionToExecute = getActionToExecute();
+                        actionToExecute = getDialogueActionToExecute();
                         if (actionToExecute != null)
                             actionToExecute.execute();
                     } while (actionToExecute != null && !actionToExecute.shouldStopAfterExecuting());
@@ -140,29 +174,24 @@ namespace data
                         Debug.Log("Choice execution completed: " + chosenCase.BoxText);
                     }
                 }
-                else
+
+                if (areDialogueActionsEnded() && areChoiceActionsEnded())
                 {
-                    Debug.LogError("Inconsistency in the dialog completion state. This should never happen.");
-                }
-                if (isEnded())
-                {
+                    if (dialogueProgress == null)
+                        throw new InvalidOperationException("There is no dialogue progress data to store the ended state into.");
+
                     dialogueProgress.setEnded();
                 }
             }
         }
 
-        public bool isEnded()
+        public bool areDialogueActionsEnded()
         {
-            return areDialogueActionsEnded() && areChoiceActionsEnded();
-        }
-
-        private bool areDialogueActionsEnded()
-        {
-            DialogueAction actionToExecute = getActionToExecute();
+            DialogueAction actionToExecute = getDialogueActionToExecute();
             return actionToExecute == null;
         }
 
-        private bool areChoiceActionsEnded()
+        public bool areChoiceActionsEnded()
         {
             if (choices != null && choices.Length > 0)
             {

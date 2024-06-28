@@ -36,7 +36,11 @@ namespace data
             Stat statConsts = ownerData.findStat(statId);
             if (statConsts.IsCharacterStat())
             {
-                statProgress = ownerData.ProgressData.findCharData(OwnerDialogue.CharacterId).findStat(statId);
+                CharacterProgressData charProgress = ownerData.ProgressData.findCharData(OwnerDialogue.CharacterId);
+                if (charProgress != null)
+                    statProgress = charProgress.findStat(statId);
+                else
+                    throw new KeyNotFoundException("Undefined character '"+OwnerDialogue.CharacterId+"'. Define it inside the CharacterConsts object.");
             }
             else if (statConsts.IsGlobalStat()) 
             {

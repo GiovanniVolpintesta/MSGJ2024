@@ -7,10 +7,12 @@ using UnityEngine.UI;
 
 public class PresentationController : MonoBehaviour
 {
+    private enum UIType { DESK, DIALOGUE }
+
     [SerializeField]
     CanvasGroup dialoguePanel;
     [SerializeField]
-    DialogScreenController dialogScreenController;
+    DialogScreenController dialogueScreenController;
 
     [SerializeField]
     CanvasGroup mainPanel;
@@ -30,11 +32,13 @@ public class PresentationController : MonoBehaviour
 
     void Start()
     {
+        refreshUI(UIType.DESK);
+
         if (dialoguePanel)
         {
-            setDialoguePanelVisible(false);
             dialoguePanel.alpha = 0; // immediately hide canvas group
         }
+
         Bind();
         isStarted = true;
     }
@@ -58,10 +62,10 @@ public class PresentationController : MonoBehaviour
         {
             answerTelephoneButton.onClick.AddListener(OnAnswerTelephoneButtonClick);
         }
-        if (dialogScreenController != null)
+        if (dialogueScreenController != null)
         {
-            dialogScreenController.onProceedButtonClicked += OnProceedDialogueButtonClick;
-            dialogScreenController.onChoiceSelected += onChoiceSelectedCallback;
+            dialogueScreenController.onProceedButtonClicked += OnProceedDialogueButtonClick;
+            dialogueScreenController.onChoiceSelected += onChoiceSelectedCallback;
         }
     }
 
@@ -71,10 +75,10 @@ public class PresentationController : MonoBehaviour
         {
             answerTelephoneButton.onClick.RemoveListener(OnAnswerTelephoneButtonClick);
         }
-        if (dialogScreenController != null)
+        if (dialogueScreenController != null)
         {
-            dialogScreenController.onProceedButtonClicked -= OnProceedDialogueButtonClick;
-            dialogScreenController.onChoiceSelected -= onChoiceSelectedCallback;
+            dialogueScreenController.onProceedButtonClicked -= OnProceedDialogueButtonClick;
+            dialogueScreenController.onChoiceSelected -= onChoiceSelectedCallback;
         }
     }
 
@@ -91,21 +95,21 @@ public class PresentationController : MonoBehaviour
         }
     }
 
-    private void setDialoguePanelVisible(bool isVisible)
+    private void refreshUI(UIType type)
     {
         if (dialoguePanel != null)
         {
-            dialoguePanelVisible = isVisible;
-            dialoguePanel.interactable = isVisible;
-            dialoguePanel.blocksRaycasts = isVisible;
+            dialoguePanelVisible = (type == UIType.DIALOGUE);
+            dialoguePanel.interactable = (type == UIType.DIALOGUE);
+            dialoguePanel.blocksRaycasts = (type == UIType.DIALOGUE);
         }
 
         if (mainPanel != null)
         {
-            mainPanel.interactable = !isVisible;
+            mainPanel.interactable = (type == UIType.DESK);
         }
 
-        if (isVisible)
+        if (type == UIType.DIALOGUE)
         {
             if (incomingCallImage != null)
             {
@@ -125,79 +129,61 @@ public class PresentationController : MonoBehaviour
 
     private void OnAnswerTelephoneButtonClick()
     {
-        if (!data.GameData.Instance.canExecuteCurrentDialogue())
+        Dialogue currentDialogue = GameData.Instance.getCurrentDialogue();
+        if (currentDialogue != null && currentDialogue.canExecute() && !currentDialogue.isStarted())
         {
-            data.GameData.Instance.extractNewDialog();            
+            currentDialogue.execute();
         }
 
-        if (data.GameData.Instance.canExecuteCurrentDialogue())
+        if (dialogueScreenController != null)
         {
-            setDialoguePanelVisible(true);
-            RefreshMessages();
+            dialogueScreenController.SetupDialogue(data.GameData.Instance.getCurrentDialogue());
         }
-        else
-        {
-            Debug.LogError("No dialogue can be executed.");
-        }
+        refreshUI(UIType.DIALOGUE);
     }
 
     private void OnProceedDialogueButtonClick()
     {
-        if (GameData.Instance.canExecuteCurrentDialogue())
+        if (dialogueScreenController != null && dialogueScreenController.getDialogue() != data.GameData.Instance.getCurrentDialogue())
         {
-            GameData.Instance.executeCurrentDialogue();
+            Debug.LogWarning("Dialogue inconsisistency: current dialogue is "+ data.GameData.Instance.getCurrentDialogue().Id + " while the visualized dialogue is "+ dialogueScreenController.getDialogue() .Id + ". The current dialogue will replace the visualized one");
+            dialogueScreenController.SetupDialogue(data.GameData.Instance.getCurrentDialogue());
         }
 
-        if (GameData.Instance.canExecuteCurrentDialogue())
+        Dialogue currentDialogue = GameData.Instance.getCurrentDialogue();
+        if (currentDialogue != null && currentDialogue.canExecute())
         {
-            RefreshMessages();
+            currentDialogue.execute();
+
+            if (dialogueScreenController != null)
+            {
+                dialogueScreenController.Refresh();
+            }
         }
         else
         {
-            if (dialogScreenController != null)
+            if (dialogueScreenController != null)
             {
-                dialogScreenController.clearMessages();
+                dialogueScreenController.Clear();
             }
-            setDialoguePanelVisible(false);
-        }
-    }
+            refreshUI(UIType.DESK);
 
-    private void RefreshMessages()
-    {
-        Dialogue currentDialogue = GameData.Instance.findDialogue(GameData.Instance.ProgressData.CurrentDialogueId);
-        DialogueAction actionToExecute = currentDialogue.getActionToExecute();
-        if (actionToExecute == null && currentDialogue.getChoicesMessages().Length > 0)
-        {
-            DialogueChoiceCase choice = currentDialogue.getChosenCase();
-            if (choice == null)
+            currentDialogue = GameData.Instance.extractNewDialog();
+            if (currentDialogue == null || !currentDialogue.canExecute())
             {
-                dialogScreenController.setupChoices(currentDialogue.getChoicesMessages());
-                return;
+                Debug.LogError("No new dialogue can be executed.");
             }
-            else
-            {
-                actionToExecute = choice.getActionToExecute();
-            }
-        }
-
-        if (actionToExecute != null && actionToExecute.GetType().IsAssignableFrom(typeof(DialogueMessage)))
-        {
-            DialogueMessage messageAction = (DialogueMessage)actionToExecute;
-            if (messageAction.Type == DialogueMessage.MessageType.SENT)
-            {
-                dialogScreenController.pushMessage(null, messageAction.Text);
-            }
-            else
-            {
-                dialogScreenController.pushMessage(currentDialogue.CharacterId, messageAction.Text);
-            }
-            return;
         }
     }
 
     private void onChoiceSelectedCallback(int i)
     {
-        Dialogue currentDialogue = GameData.Instance.findDialogue(GameData.Instance.ProgressData.CurrentDialogueId);
+        Dialogue currentDialogue = data.GameData.Instance.getCurrentDialogue();
+        if (dialogueScreenController != null && dialogueScreenController.getDialogue() != currentDialogue)
+        {
+            Debug.LogWarning("Dialogue inconsisistency: current dialogue is " + data.GameData.Instance.getCurrentDialogue().Id + " while the visualized dialogue is " + dialogueScreenController.getDialogue().Id + ". The choice selection will be ignored.");
+        }
+
         if (currentDialogue != null)
         {
             currentDialogue.SetChoiceSelection(i);

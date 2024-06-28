@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -17,6 +18,7 @@ namespace data
         private DialogueActionInitializer[] messages;
 
         private DialogueAction[] dialogueActions;
+        public ICollection<DialogueAction> DialogueActions { get { return dialogueActions.AsReadOnlyCollection(); } }
 
         public DialogueAction getActionToExecute()
         {

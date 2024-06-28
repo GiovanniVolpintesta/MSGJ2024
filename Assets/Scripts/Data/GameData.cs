@@ -39,11 +39,12 @@ namespace data
                 this.firstDialogueId = firstDialogueId;
 
                 InitializeProgressData();
-                progressData.CurrentDialogueId = firstDialogueId;
 
                 foreach (Stat s in stats) s.Initialize(this);
                 foreach (Dialogue d in dialogues) d.Initialize(this);
 
+                progressData.CurrentDialogueId = firstDialogueId; // TODO: extract the dialogue and remove the first dialogue configuration
+                
                 initialized = true;
             }
             else
@@ -119,53 +120,9 @@ namespace data
             return charactersData.findCharacterConsts(characterId);
         }
 
-        public bool canExecuteCurrentDialogue()
-        {
-            Dialogue dialogue = null;
-            if (progressData.CurrentDialogueId != null)
-            {
-                dialogue = findDialogue(progressData.CurrentDialogueId);
-                if (dialogue != null && !dialogue.isEnded())
-                {
-                    DialogueProgressData dialogueProgress = null;
-                    dialogueProgress = progressData.findDialogue(progressData.CurrentDialogueId);
-                    if (dialogueProgress == null || !dialogueProgress.IsEnded)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        Debug.LogError("Dialog progress data are not consistent with current game data. Dialog: " + progressData.CurrentDialogueId);
-                    }
-                }
-            }
-            return false;
-        }
+        public Dialogue getCurrentDialogue() { return findDialogue(progressData.CurrentDialogueId); }
 
-        public void executeCurrentDialogue()
-        {
-            DialogueProgressData dialogueProgress = null;
-            Dialogue dialogue = null;
-            if (progressData.CurrentDialogueId != null)
-            {
-                dialogue = findDialogue(progressData.CurrentDialogueId);
-            }
-
-            if (dialogue != null && !dialogue.isEnded())
-            {
-                dialogue.execute();
-                if (dialogue.isEnded())
-                {
-                    dialogueProgress = progressData.findDialogue(progressData.CurrentDialogueId);
-                    if (dialogueProgress != null)
-                    {
-                        dialogueProgress.setEnded();
-                    }
-                }
-            }
-        }
-
-        public void extractNewDialog()
+        public Dialogue extractNewDialog()
         {
             List<Dialogue> dialoguesToExecute = new List<Dialogue>();
             int maxPriority = int.MinValue;
@@ -212,6 +169,8 @@ namespace data
                     progressData.CurrentDialogueId = null;
                 }
             }
+
+            return getCurrentDialogue();
         }
     }
 }

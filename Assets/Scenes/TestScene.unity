@@ -929,7 +929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialoguePanel: {fileID: 1340131839}
-  dialogScreenController: {fileID: 4300824665420958624}
+  dialogueScreenController: {fileID: 4300824665420958624}
   mainPanel: {fileID: 1528700784}
   answerTelephoneButton: {fileID: 3199510855279669197}
   incomingCallImage: {fileID: 3199510855279669196}

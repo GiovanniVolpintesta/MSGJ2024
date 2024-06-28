@@ -1,3 +1,4 @@
+using data;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,6 +7,8 @@ using UnityEngine.UI;
 
 public class DialogScreenController : MonoBehaviour
 {
+    private enum InteractionType { PROCEED, SELECTION }
+
     public delegate void OnProceed();
 
     public event OnChoiceSelected onChoiceSelected;
@@ -31,7 +34,12 @@ public class DialogScreenController : MonoBehaviour
     List<GameObject> choiceControllers = new List<GameObject>();
     bool isStarted = false;
 
-    public void clearMessages()
+    Dialogue dialogue = null;
+    public Dialogue getDialogue() { return dialogue; }
+
+    List<DialogueMessage> visualizedMessages = new List<DialogueMessage>();
+
+    public void Clear()
     {
         if (messagesContainer != null)
         {
@@ -42,36 +50,109 @@ public class DialogScreenController : MonoBehaviour
                 if (child != null && !child.IsDestroyed())
                     Destroy(child.gameObject);
         }
+        visualizedMessages.Clear();
     }
 
-    public void pushMessage (string character, string message)
+    public void SetupDialogue (Dialogue dialogue)
     {
-        if (messageGameObject != null)
+        Clear();
+        this.dialogue = dialogue;
+        Refresh();
+    }
+
+    public void Refresh()
+    {
+        if (this.dialogue != null)
+        {
+            enqueueNewMessages(this.dialogue.DialogueActions);
+
+            DialogueChoiceCase choiceSelection = this.dialogue.getChosenCase();
+            if (choiceSelection != null)
+            {
+                enqueueNewMessages(choiceSelection.DialogueActions);
+            }
+
+            string[] choiceMsgs = { };
+            InteractionType interactionType = InteractionType.PROCEED;
+            if (!this.dialogue.isEnded() // if the dialogue is not ended,
+                && this.dialogue.areDialogueActionsEnded() // but the main dialogue sequence is ended,
+                && choiceSelection == null) // and a choice has not been selected yet
+            {
+                // (if there is no choice the dialogue would end when the main sequence is ended)
+                choiceMsgs = this.dialogue.getChoicesMessages();
+                interactionType = InteractionType.SELECTION;
+            }
+
+            setupChoices(choiceMsgs);
+            showInterationUI(interactionType);
+        }            
+    }
+
+    private void showInterationUI(InteractionType interationType)
+    {
+        if (proceedDialogueButton != null && proceedDialogueButton.gameObject != null)
+        {
+            proceedDialogueButton.gameObject.SetActive(interationType == InteractionType.PROCEED);
+        }
+        if (choicesContainer != null)
+        {
+            choicesContainer.SetActive(interationType == InteractionType.SELECTION);
+        }
+    }
+
+    private void enqueueNewMessages(ICollection<DialogueAction> actions)
+    {
+        foreach (DialogueAction action in actions)
+        {
+            if (action != null && action.isEnded() && action.GetType().IsAssignableFrom(typeof(DialogueMessage)))
+            {
+                DialogueMessage message = (DialogueMessage)action;
+                if (message != null && !visualizedMessages.Contains(message))
+                {
+                    pushMessage(message);
+                    visualizedMessages.Add(message);
+                }
+            }
+        }
+    }
+
+    private void pushMessage (DialogueMessage message)
+    {
+        if (message != null && messageGameObject != null)
         {
             if (messagesContainer != null)
             {
+                string character = (message.Type == DialogueMessage.MessageType.RECEIVED) ? message.OwnerDialogue.CharacterId : null;
                 GameObject newMessage = GameObject.Instantiate(messageGameObject, messagesContainer.transform);
                 newMessage.transform.SetAsFirstSibling();
                 MessageController newMessageController = newMessage.GetComponent<MessageController>();
-                if (newMessageController != null) newMessageController.Setup(character, message);
+                if (newMessageController != null) newMessageController.Setup(character, message.Text);
             }
+
             if (scroll != null && scroll.verticalScrollbar != null)
             {
                 scroll.verticalScrollbar.value = 0;
             }
         }
     }
-    public void setupChoices (string[]choices)
+
+    private void setupChoices (string[]choices)
     {
+        foreach (GameObject go in choiceControllers)
+        {
+            ChoiceController choiceController = go.GetComponent<ChoiceController>();
+            if (choiceController != null)
+            {
+                choiceController.onChoiceSelected -= onChoiceSelectedCallback;
+            }
+            Destroy(go);
+        }
+        choiceControllers.Clear();
+
         if (choicesGameObject != null)
         {
-            if (proceedDialogueButton != null)
-            {
-                proceedDialogueButton.gameObject.SetActive(false);
-            }
             if (choicesContainer != null)
             {
-                choicesContainer.SetActive(true);
                 for (int i = 0; i < choices.Length; i++)
                 {
                     GameObject newChoice = GameObject.Instantiate(choicesGameObject, choicesContainer.transform);
@@ -92,24 +173,6 @@ public class DialogScreenController : MonoBehaviour
 
     private void onChoiceSelectedCallback(int i)
     {
-        foreach (GameObject go in choiceControllers)
-        {
-            ChoiceController choiceController = go.GetComponent<ChoiceController>();
-            if (choiceController != null)
-            {
-                choiceController.onChoiceSelected -= onChoiceSelectedCallback;
-            }
-            Destroy(go);
-        }
-        choiceControllers.Clear();
-        if (choicesContainer != null)
-        { 
-            choicesContainer.SetActive(false);
-        }
-        if (proceedDialogueButton != null)
-        {
-            proceedDialogueButton.gameObject.SetActive(true);
-        }
         if (onChoiceSelected != null)
         {
             onChoiceSelected(i);
