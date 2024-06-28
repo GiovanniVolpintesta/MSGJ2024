@@ -30,7 +30,10 @@ namespace data
         [SerializeField]
         private int priority = 0;
         public int DialoguePriority { get { return priority; } }
-      
+
+        [SerializeField]
+        private DialogueUnlockCondition[] unlockConditions;
+
         [SerializeField]
         private DialogueActionInitializer[] messages;
         private DialogueAction[] dialogueActions;
@@ -113,6 +116,22 @@ namespace data
         public bool isUnlocked()
         {
             return dialogueProgress != null && dialogueProgress.IsUnlocked;
+        }
+
+        public bool canBeUnlocked()
+        {
+            if (unlockConditions != null)
+            {
+                foreach (DialogueUnlockCondition condition in unlockConditions)
+                {
+                    if (condition != null && !DialogueUnlockCondition.checkCondition(this, condition))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         public bool isStarted()

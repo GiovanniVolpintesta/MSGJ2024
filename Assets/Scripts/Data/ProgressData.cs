@@ -55,7 +55,8 @@ namespace data
 
         [SerializeField]
         private int playedDialogues;
-        public int PlayedDialogues { get { return playedDialogues; } }
+        [SerializeField]
+        private int playedDialoguesInLastDay;
 
         public ProgressData()
         {
@@ -63,6 +64,7 @@ namespace data
             globalStats = new List<StatProgressData>();
             dialogues = new List<DialogueProgressData>();
             playedDialogues = 0;
+            playedDialoguesInLastDay = 0;
             currentDialogueId = null;
         }
 
@@ -119,15 +121,18 @@ namespace data
             return true;
         }
 
-        public bool dialogueCanBeUnlocked(string dialogueId)
-        {
-            // TODO
-            return true;
-        }
-
         private void OnDialogueEnded()
         {
+            // TODO: remove this logic and substitute with a time stat defined in json
             playedDialogues++;
+            playedDialoguesInLastDay++;
+            if (playedDialoguesInLastDay >= GameData.Instance.DialoguesPerDay)
+            {
+                StatProgressData dayProgressData = findGlobalStat(GameData.Instance.DayStatId);
+                if (dayProgressData != null) dayProgressData.incrementValue(1);
+
+                playedDialoguesInLastDay -= GameData.Instance.DialoguesPerDay;
+            }
         }
     }
 

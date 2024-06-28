@@ -32,19 +32,23 @@ namespace data
             if (!isEnded())
             {
                 executed = true;
+                //log();
+            }
+        }
 
-                if (type == MessageType.SENT)
-                {
-                    Debug.Log("SENT: " + Text);
-                }
-                else if (type == MessageType.RECEIVED)
-                {
-                    Debug.Log("RECEIVED: " + Text);
-                }
-                else
-                {
-                    Debug.LogWarning("UNKNOWN MESSAGE TYPE: " + Text);
-                }
+        private void log()
+        {
+            if (type == MessageType.SENT)
+            {
+                Debug.Log("SENT: " + Text);
+            }
+            else if (type == MessageType.RECEIVED)
+            {
+                Debug.Log("RECEIVED: " + Text);
+            }
+            else
+            {
+                Debug.LogWarning("UNKNOWN MESSAGE TYPE: " + Text);
             }
         }
 

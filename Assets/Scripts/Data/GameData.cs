@@ -17,12 +17,16 @@ namespace data
         [SerializeField]
         private Dialogue[] dialogues;
 
+        private int dialoguedPerDay;
+        public int DialoguesPerDay { get { return dialoguedPerDay; } }
+
+        private string dayStatId;
+        public string DayStatId { get { return dayStatId; } }
+
         private CharactersData charactersData;
         [SerializeField]
         private ProgressData progressData;
         public ProgressData ProgressData { get { return progressData; } }
-
-        private string firstDialogueId;
 
         private bool initialized = false;
 
@@ -31,21 +35,22 @@ namespace data
             instance = JsonUtility.FromJson<GameData>(jsonString);
         }
 
-        public void Initialize(CharactersData charactersData, string firstDialogueId)
+        public void Initialize(CharactersData charactersData, int dialoguedPerDay, string dayStatId)
         {
             if (!initialized)
             {
                 this.charactersData = charactersData;
-                this.firstDialogueId = firstDialogueId;
+                this.dialoguedPerDay = dialoguedPerDay;
+                this.dayStatId = dayStatId;
 
                 InitializeProgressData();
 
                 foreach (Stat s in stats) s.Initialize(this);
                 foreach (Dialogue d in dialogues) d.Initialize(this);
 
-                progressData.CurrentDialogueId = firstDialogueId; // TODO: extract the dialogue and remove the first dialogue configuration
-                
                 initialized = true;
+
+                extractNewDialog();
             }
             else
             {
@@ -92,7 +97,7 @@ namespace data
                 if (d != null)
                 {
                     DialogueProgressData dialogueProgressData = new DialogueProgressData(d.Id);
-                    if (progressData.dialogueCanBeUnlocked(d.Id))
+                    if (d.canBeUnlocked())
                     {
                         dialogueProgressData.Unlock();
                     }
@@ -139,7 +144,7 @@ namespace data
                     {
                         DialogueProgressData dialogProgress = progressData.findDialogue(d.Id);
 
-                        if (!dialogProgress.IsUnlocked && progressData.dialogueCanBeUnlocked(d.Id))
+                        if (!dialogProgress.IsUnlocked && d.canBeUnlocked())
                         {
                             dialogProgress.Unlock();
                         }

@@ -10,13 +10,15 @@ public class GameDataManager : MonoBehaviour
     private string DialogStructureFilePath;
 
     [SerializeField]
-    private string firstDialogueId;
-
-    [SerializeField]
     private CharactersData CharactersData;
 
     [SerializeField]
     private GameData gameData;
+
+    [SerializeField]
+    private int dialoguesPerDay = 3;
+    [SerializeField]
+    private string dayStatId = "day";
 
     // Start is called before the first frame update
     void Awake()
@@ -46,7 +48,7 @@ public class GameDataManager : MonoBehaviour
             {
                 GameData.createFromJSON(reader.ReadToEnd());
                 gameData = GameData.Instance;
-                gameData.Initialize(CharactersData, firstDialogueId);
+                gameData.Initialize(CharactersData, dialoguesPerDay, dayStatId);
             }
         }
     }
