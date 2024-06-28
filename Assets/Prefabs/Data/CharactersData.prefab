@@ -45,15 +45,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterConsts:
+  - id: Player
+    avatarTexture: {fileID: 0}
+    SatisfationBarColor: {r: 0, g: 0, b: 0, a: 0}
+    SatisfationBarForeground: {fileID: 0}
   - id: c_00
-    SatisfationAvatarTexture: {fileID: 0}
+    avatarTexture: {fileID: 0}
     SatisfationBarColor: {r: 0, g: 0, b: 0, a: 0}
     SatisfationBarForeground: {fileID: 0}
   - id: c_01
-    SatisfationAvatarTexture: {fileID: 0}
+    avatarTexture: {fileID: 0}
     SatisfationBarColor: {r: 0, g: 0, b: 0, a: 0}
     SatisfationBarForeground: {fileID: 0}
   - id: c_02
-    SatisfationAvatarTexture: {fileID: 0}
+    avatarTexture: {fileID: 0}
     SatisfationBarColor: {r: 0, g: 0, b: 0, a: 0}
     SatisfationBarForeground: {fileID: 0}
+  playerCharacterId: Player
