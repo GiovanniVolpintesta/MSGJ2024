@@ -1396,6 +1396,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4966459229976316364, guid: ebc542059d18c4446a6c04025b702a8d, type: 3}
+      propertyPath: m_Name
+      value: DialogueScreenBlackscreen
+      objectReference: {fileID: 0}
     - target: {fileID: 5569754638876005951, guid: ebc542059d18c4446a6c04025b702a8d, type: 3}
       propertyPath: m_Direction
       value: 3
@@ -1406,7 +1410,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6228805250725572329, guid: ebc542059d18c4446a6c04025b702a8d, type: 3}
       propertyPath: m_Name
-      value: DialogScreen
+      value: DialogueScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 6228805250725572329, guid: ebc542059d18c4446a6c04025b702a8d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647333042055452401, guid: ebc542059d18c4446a6c04025b702a8d, type: 3}
+      propertyPath: m_Name
+      value: DialogueScreenBackground
       objectReference: {fileID: 0}
     - target: {fileID: 7987711703377743913, guid: ebc542059d18c4446a6c04025b702a8d, type: 3}
       propertyPath: m_Pivot.x
