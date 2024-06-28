@@ -28,7 +28,6 @@ namespace data
             {
                 statProgress.incrementValue(value);
                 executed = true;
-                Debug.Log("Incrementing '" + statProgress.Id + "' stat by '" + value + "'");
             }
         }
 
@@ -53,5 +52,11 @@ namespace data
         {
             return executed;
         }
+
+        public override bool shouldStopAfterExecuting()
+        {
+            return false;
+        }
+        
     }
 }

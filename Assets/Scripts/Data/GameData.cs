@@ -22,6 +22,8 @@ namespace data
         private ProgressData progressData;
         public ProgressData ProgressData { get { return progressData; } }
 
+        private string firstDialogueId;
+
         private bool initialized = false;
 
         static public void createFromJSON(string jsonString)
@@ -29,13 +31,15 @@ namespace data
             instance = JsonUtility.FromJson<GameData>(jsonString);
         }
 
-        public void Initialize(CharactersData charactersData)
+        public void Initialize(CharactersData charactersData, string firstDialogueId)
         {
             if (!initialized)
             {
                 this.charactersData = charactersData;
+                this.firstDialogueId = firstDialogueId;
 
                 InitializeProgressData();
+                progressData.CurrentDialogueId = firstDialogueId;
 
                 foreach (Stat s in stats) s.Initialize(this);
                 foreach (Dialogue d in dialogues) d.Initialize(this);
@@ -94,6 +98,8 @@ namespace data
                     progressData.addDialogueData(dialogueProgressData);
                 }
             }
+
+            progressData.Bind();
         }
 
         public Stat findStat(string id)
@@ -110,39 +116,58 @@ namespace data
 
         public CharacterConsts findCharacterConsts(string characterId)
         {
-            foreach (CharacterConsts e in charactersData.CharacterConst)
+            return charactersData.findCharacterConsts(characterId);
+        }
+
+        public bool canExecuteCurrentDialogue()
+        {
+            Dialogue dialogue = null;
+            if (progressData.CurrentDialogueId != null)
             {
-                if (e.Id.Equals(characterId))
-                    return e;
+                dialogue = findDialogue(progressData.CurrentDialogueId);
+                if (dialogue != null && !dialogue.isEnded())
+                {
+                    DialogueProgressData dialogueProgress = null;
+                    dialogueProgress = progressData.findDialogue(progressData.CurrentDialogueId);
+                    if (dialogueProgress == null || !dialogueProgress.IsEnded)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        Debug.LogError("Dialog progress data are not consistent with current game data. Dialog: " + progressData.CurrentDialogueId);
+                    }
+                }
             }
-            return null;
+            return false;
         }
 
-        public void executeDialogue()
+        public void executeCurrentDialogue()
         {
-            DialogueProgressData dialogueProgress = null;            
+            DialogueProgressData dialogueProgress = null;
+            Dialogue dialogue = null;
             if (progressData.CurrentDialogueId != null)
-                dialogueProgress = progressData.findDialogue(progressData.CurrentDialogueId);
-            
-            if (dialogueProgress == null || dialogueProgress.IsEnded)
-                progressData.CurrentDialogueId = null;
+            {
+                dialogue = findDialogue(progressData.CurrentDialogueId);
+            }
 
-            if (progressData.CurrentDialogueId == null)
-                progressData.CurrentDialogueId = extractNewDialog();
-
-            Dialogue newDialogue = null;
-            if (progressData.CurrentDialogueId != null)
-                newDialogue = findDialogue(progressData.CurrentDialogueId);
-
-            if (newDialogue != null)
-                newDialogue.execute();
-            else
-                Debug.LogError("Nothing to execute!!!");
+            if (dialogue != null && !dialogue.isEnded())
+            {
+                dialogue.execute();
+                if (dialogue.isEnded())
+                {
+                    dialogueProgress = progressData.findDialogue(progressData.CurrentDialogueId);
+                    if (dialogueProgress != null)
+                    {
+                        dialogueProgress.setEnded();
+                    }
+                }
+            }
         }
 
-        private string extractNewDialog()
+        public void extractNewDialog()
         {
-            List<Dialogue> unlockedDialogs = new List<Dialogue>();
+            List<Dialogue> dialoguesToExecute = new List<Dialogue>();
             int maxPriority = int.MinValue;
 
             DialogueProgressData dialogueProgress = null;
@@ -151,43 +176,41 @@ namespace data
 
             if (dialogueProgress == null || dialogueProgress.IsEnded)
             {
-                progressData.incrementGameTime();
-
                 foreach (Dialogue d in dialogues)
                 {
                     if (d != null)
                     {
                         DialogueProgressData dialogProgress = progressData.findDialogue(d.Id);
 
-                        if (progressData.dialogueCanBeUnlocked(d.Id))
+                        if (!dialogProgress.IsUnlocked && progressData.dialogueCanBeUnlocked(d.Id))
                         {
                             dialogProgress.Unlock();
                         }
 
-                        if (dialogProgress.IsUnlocked)
+                        if (dialogProgress.IsUnlocked && !dialogProgress.IsEnded)
                         {
-                            if (d.DialoguePriority > maxPriority)
+                            if (d.DialoguePriority >= maxPriority)
                             {
-                                maxPriority = d.DialoguePriority;
-                                unlockedDialogs.Clear();
-                                unlockedDialogs.Add(d);
-                            }
-                            else if (maxPriority == d.DialoguePriority)
-                            {
-                                unlockedDialogs.Add(d);
+                                if (d.DialoguePriority > maxPriority)
+                                {
+                                    maxPriority = d.DialoguePriority;
+                                    dialoguesToExecute.Clear();
+                                }
+
+                                dialoguesToExecute.Add(d);
                             }
                         }
                     }
                 }
-            }
 
-            if (unlockedDialogs.Count > 0)
-            {
-                return unlockedDialogs[UnityEngine.Random.Range(0, unlockedDialogs.Count)].Id;
-            }
-            else
-            {
-                return null;
+                if (dialoguesToExecute.Count > 0)
+                {
+                    progressData.CurrentDialogueId = dialoguesToExecute[UnityEngine.Random.Range(0, dialoguesToExecute.Count)].Id;
+                }
+                else
+                {
+                    progressData.CurrentDialogueId = null;
+                }
             }
         }
     }

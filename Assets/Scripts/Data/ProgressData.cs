@@ -6,7 +6,8 @@ using UnityEngine;
 
 namespace data
 {
-    public delegate void OnValueChanged (float OldValue, float NewValue);
+    public delegate void OnValueChanged(float OldValue, float NewValue);
+    public delegate void OnEvent();
 
     [System.Serializable]
     public class ProgressData
@@ -53,17 +54,27 @@ namespace data
         }
 
         [SerializeField]
-        private int gameTime;
-        public int GameTime { get { return gameTime; } }
-        public void incrementGameTime() { gameTime++; }
+        private int playedDialogues;
+        public int PlayedDialogues { get { return playedDialogues; } }
 
         public ProgressData()
         {
             charactersData = new List<CharacterProgressData>();
             globalStats = new List<StatProgressData>();
             dialogues = new List<DialogueProgressData>();
-            gameTime = -1;
+            playedDialogues = 0;
             currentDialogueId = null;
+        }
+
+        public void Bind()
+        {
+            foreach (DialogueProgressData d in dialogues)
+            {
+                if (d != null)
+                {
+                    d.onDialogueEnded += OnDialogueEnded;
+                }
+            }
         }
 
         public bool addGlobalStat(StatProgressData newStatData)
@@ -112,6 +123,11 @@ namespace data
         {
             // TODO
             return true;
+        }
+
+        private void OnDialogueEnded()
+        {
+            playedDialogues++;
         }
     }
 
@@ -187,12 +203,16 @@ namespace data
 
         public void setValue(int value)
         {
-            if (value >= min && value <= max)
+            value = Mathf.Clamp(value, min, max);
+            int oldValue = this.value;
+            if (oldValue != value)
             {
-                int oldValue = this.value;
                 this.value = value;
                 Debug.Log("Stat " + Id + " changed from " + oldValue + " to " + value);
-                onValueChanged.Invoke(oldValue, value);
+                if (onValueChanged != null)
+                {
+                    onValueChanged(oldValue, value);
+                }
             }
         }
 
@@ -202,6 +222,8 @@ namespace data
     [System.Serializable]
     public class DialogueProgressData
     {
+        public event OnEvent onDialogueEnded;
+
         [SerializeField]
         private string id;
         public string Id { get { return id; } }
@@ -227,6 +249,10 @@ namespace data
             {
                 ended = true;
                 Debug.Log("Dialogue '" + id + "' ended");
+                if (onDialogueEnded != null)
+                {
+                    onDialogueEnded();
+                }
             }
         }
 

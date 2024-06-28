@@ -20,5 +20,6 @@ namespace data
         // Executes the action, then returns true if the execution has ended, false otherwise
         public abstract void execute();
         public abstract bool isEnded();
+        public virtual bool shouldStopAfterExecuting() { return true; }
     }
 }

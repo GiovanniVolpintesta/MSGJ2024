@@ -18,7 +18,7 @@ namespace data
 
         private DialogueAction[] dialogueActions;
 
-        private DialogueAction getActionToExecute()
+        public DialogueAction getActionToExecute()
         {
             foreach (DialogueAction action in dialogueActions)
             {
@@ -34,9 +34,13 @@ namespace data
 
         public void execute()
         {
-            DialogueAction actionToExecute = getActionToExecute();
-            if (actionToExecute != null)
-                actionToExecute.execute();
+            DialogueAction actionToExecute;
+            do
+            {
+                actionToExecute = getActionToExecute();
+                if (actionToExecute != null)
+                    actionToExecute.execute();
+            } while (actionToExecute != null && !actionToExecute.shouldStopAfterExecuting());
         }
 
         public bool isEnded()

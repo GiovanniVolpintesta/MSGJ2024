@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.Serialization;
 
 namespace data
@@ -33,24 +34,36 @@ namespace data
 
         [SerializeField]
         DialogueChoiceCase[] choices;
+        public string[] getChoicesMessages()
+        {
+            List<string> msgs = new List<string>();
+            if (choices != null)
+            {
+                foreach (DialogueChoiceCase c in choices)
+                {
+                    msgs.Add((c != null && c.BoxText != null) ? c.BoxText : "");
+                }
+            }
+            return msgs.ToArray();
+        }
 
         DialogueProgressData dialogueProgress;
 
         private int chosenCaseIndex;
-        public int ChosenCaseIndex
+        public int ChosenCaseIndex { get { return chosenCaseIndex; } }
+        public void SetChoiceSelection(int index)
         {
-            get { return chosenCaseIndex; }
-            set
+            if (areDialogueActionsEnded())
             {
                 if (chosenCaseIndex == -1)
                 {
-                    if (areDialogueActionsEnded())
+                    if (index >= 0 && index < choices.Length)
                     {
-                        chosenCaseIndex = value;
+                        chosenCaseIndex = index;
                     }
                     else
                     {
-                        Debug.LogError("A dialog choice has been aborted because the previous actions are not complete.");
+                        Debug.LogError("The selected choice index ("+index+") is not valid (there are "+choices.Length+" choices available).");
                     }
                 }
                 else
@@ -58,9 +71,13 @@ namespace data
                     Debug.LogWarning("A dialog choice override operation has been aborted.");
                 }
             }
+            else
+            {
+                Debug.LogWarning("Choices cannot be set before the main dialog is ended.");
+            }
         }
 
-        private DialogueChoiceCase getChosenCase()
+        public DialogueChoiceCase getChosenCase()
         {
             if (chosenCaseIndex >= 0 && chosenCaseIndex < choices.Length)
             {
@@ -69,7 +86,7 @@ namespace data
             return null;
         }
 
-        private DialogueAction getActionToExecute()
+        public DialogueAction getActionToExecute()
         {
             foreach (DialogueAction action in dialogueActions)
             {
@@ -97,9 +114,14 @@ namespace data
                 Debug.Log("Executing dialog: " + Id);
                 if (!areDialogueActionsEnded())
                 {
-                    DialogueAction actionToExecute = getActionToExecute();
-                    if (actionToExecute != null)
-                        actionToExecute.execute();
+                    DialogueAction actionToExecute;
+                    do
+                    {
+                        actionToExecute = getActionToExecute();
+                        if (actionToExecute != null)
+                            actionToExecute.execute();
+                    } while (actionToExecute != null && !actionToExecute.shouldStopAfterExecuting());
+
                     if (areDialogueActionsEnded())
                     {
                         Debug.Log("Ended dialog sequence: " + Id);
@@ -142,8 +164,12 @@ namespace data
 
         private bool areChoiceActionsEnded()
         {
-            DialogueChoiceCase chosenCase = getChosenCase();
-            return chosenCase != null ? chosenCase.isEnded() : false;
+            if (choices != null && choices.Length > 0)
+            {
+                DialogueChoiceCase chosenCase = getChosenCase();
+                return chosenCase != null ? chosenCase.isEnded() : false;
+            }
+            else return true;
         }
     }
 }
