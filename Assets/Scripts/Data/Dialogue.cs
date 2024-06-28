@@ -148,13 +148,14 @@ namespace data
                 Debug.Log("Executing dialog: " + Id);
                 if (!areDialogueActionsEnded())
                 {
-                    DialogueAction actionToExecute;
-                    do
+                    DialogueAction actionToExecute = getDialogueActionToExecute();
+                    while (actionToExecute != null)
                     {
+                        actionToExecute.execute();
                         actionToExecute = getDialogueActionToExecute();
-                        if (actionToExecute != null)
-                            actionToExecute.execute();
-                    } while (actionToExecute != null && !actionToExecute.shouldStopAfterExecuting());
+                        if (actionToExecute != null && actionToExecute.shouldStopBeforeExecuting())
+                            break;
+                    }
 
                     if (areDialogueActionsEnded())
                     {

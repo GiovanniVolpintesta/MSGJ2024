@@ -57,7 +57,7 @@ namespace data
             return executed;
         }
 
-        public override bool shouldStopAfterExecuting()
+        public override bool shouldStopBeforeExecuting()
         {
             return false;
         }

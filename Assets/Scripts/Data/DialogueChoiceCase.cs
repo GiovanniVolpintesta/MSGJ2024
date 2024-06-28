@@ -36,13 +36,14 @@ namespace data
 
         public void execute()
         {
-            DialogueAction actionToExecute;
-            do
+            DialogueAction actionToExecute = getActionToExecute();
+            while (actionToExecute != null)
             {
+                actionToExecute.execute();
                 actionToExecute = getActionToExecute();
-                if (actionToExecute != null)
-                    actionToExecute.execute();
-            } while (actionToExecute != null && !actionToExecute.shouldStopAfterExecuting());
+                if (actionToExecute != null && actionToExecute.shouldStopBeforeExecuting())
+                    break;
+            }
         }
 
         public bool isEnded()
