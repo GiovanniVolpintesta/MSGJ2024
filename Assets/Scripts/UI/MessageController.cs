@@ -23,7 +23,7 @@ public class MessageController : MonoBehaviour
         CharacterConsts characterConsts = GameData.Instance.findCharacterConsts(characterId);
         avatarTexture = characterConsts.AvatarTexture;
 
-        if (avatarImage != null)
+        if (avatarImage != null && avatarTexture != null)
         {
             avatarImage.texture = characterConsts.AvatarTexture;
         }

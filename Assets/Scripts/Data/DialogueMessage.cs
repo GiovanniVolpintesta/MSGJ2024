@@ -9,7 +9,7 @@ namespace data
         public enum MessageType { SENT, RECEIVED };
 
         private MessageType type;
-        public MessageType Type { get; }
+        public MessageType Type { get { return type; } }
 
         private string text;
         public string Text { get { return text; } }

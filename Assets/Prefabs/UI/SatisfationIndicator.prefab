@@ -446,6 +446,8 @@ MonoBehaviour:
   statId: 
   fillBarTransform: {fileID: 4255550343045801056}
   fillBarImage: {fileID: 7388220856276057118}
+  minPercentage: 0.1
+  maxPercentage: 1
   avatarImage: {fileID: 5375555031786507306}
   fillBarMinLevelTexture: {fileID: 2800000, guid: 5cb6692690de3354890c8dd528d3bb62, type: 3}
   fillBarLevels:

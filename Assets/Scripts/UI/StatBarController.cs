@@ -31,6 +31,14 @@ public class StatBarController : MonoBehaviour
     [SerializeField]
     private RawImage fillBarImage;
 
+    [SerializeField]
+    [Range(0f, 1f)]
+    private float minPercentage = 0;
+
+    [SerializeField]
+    [Range(0f, 1f)]
+    private float maxPercentage = 1;
+
     //[SerializeField]
     //private Image foregroundImage;
 
@@ -112,7 +120,7 @@ public class StatBarController : MonoBehaviour
 
     private void OnValueChanged(float oldValue, float newValue)
     {
-        float percentage = Mathf.Clamp(((float)(newValue - MinValue)) / (MaxValue - MinValue), 0f, 1f);
+        float percentage = Mathf.Clamp(((float)(newValue - MinValue)) / (MaxValue - MinValue), minPercentage, maxPercentage);
         
         if (fillBarTransform != null)
         {
@@ -129,7 +137,7 @@ public class StatBarController : MonoBehaviour
                 {
                     if (level != null)
                     {
-                        if (percentage > level.percentage && level.percentage > maxReachedPercentage)
+                        if (percentage >= level.percentage && level.percentage > maxReachedPercentage)
                         {
                             maxReachedPercentage = level.percentage;
                             maxPercentageTexture = level.texture;
