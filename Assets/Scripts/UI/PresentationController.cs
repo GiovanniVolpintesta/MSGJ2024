@@ -20,10 +20,14 @@ public class PresentationController : MonoBehaviour
     [SerializeField]
     Button answerTelephoneButton;
     [SerializeField]
-    UnityEngine.UI.Image incomingCallImage;
-    [SerializeField]
     float incomingCallImageDelay = 3;
-    
+    [SerializeField]
+    Animator phoneAnimator;
+    [SerializeField]
+    string startRingingEvent = "startRinging";
+    [SerializeField]
+    string stopRingingEvent = "stopRinging";
+
     float dialoguePanelFadeSeconds = 1;
 
     bool dialoguePanelVisible;
@@ -111,9 +115,10 @@ public class PresentationController : MonoBehaviour
 
         if (type == UIType.DIALOGUE)
         {
-            if (incomingCallImage != null)
+            if (phoneAnimator != null)
             {
-                incomingCallImage.gameObject.SetActive(false);
+                phoneAnimator.ResetTrigger(startRingingEvent);
+                phoneAnimator.SetTrigger(stopRingingEvent);
             }
             if (answerTelephoneButton != null)
             {
@@ -196,9 +201,10 @@ public class PresentationController : MonoBehaviour
         yield return new WaitForSeconds(incomingCallImageDelay);
         if (!dialoguePanelVisible)
         {
-            if (incomingCallImage != null)
+            if (phoneAnimator != null)
             {
-                incomingCallImage.gameObject.SetActive(true);
+                phoneAnimator.ResetTrigger(stopRingingEvent);
+                phoneAnimator.SetTrigger(startRingingEvent);
             }
             if (answerTelephoneButton != null)
             {

@@ -7,8 +7,18 @@ using UnityEngine.UI;
 
 public class StatBarController : MonoBehaviour
 {
+
+    [System.Serializable]
+    public class StatBarImageAndLevel
+    {
+        [Range(0f, 1f)]
+        public float percentage;
+        public Texture2D texture;
+    }
+
+
     [SerializeField]
-    private string characterId;
+    private string avatarId;
 
     [SerializeField]
     private string statId;
@@ -18,14 +28,19 @@ public class StatBarController : MonoBehaviour
     [SerializeField]
     private RectTransform fillBarTransform;
 
-    //[SerializeField]
-    //private Image fillBarImage;
+    [SerializeField]
+    private RawImage fillBarImage;
 
     //[SerializeField]
     //private Image foregroundImage;
 
     [SerializeField]
     private RawImage avatarImage;
+
+    [SerializeField]
+    private Texture2D fillBarMinLevelTexture;
+    [SerializeField]
+    private StatBarImageAndLevel[] fillBarLevels;
 
     private float MinValue;
     private float MaxValue;
@@ -44,18 +59,19 @@ public class StatBarController : MonoBehaviour
                 MinValue = statConst.Min;
                 MaxValue = statConst.Max;
 
-                if (statConst.IsGlobalStat())
+                CharacterConsts characterData = gameData.findCharacterConsts(avatarId);
+                if (avatarImage != null && characterData != null)
                 {
-                    CharacterConsts characterData = gameData.findCharacterConsts(characterId);
-                    statProgress = gameData.ProgressData.findGlobalStat(statId);
-                    if (avatarImage != null)
-                    {
-                        avatarImage.texture = characterData.AvatarTexture;
-                    }
+                    avatarImage.texture = characterData.AvatarTexture;
+                }
+
+                if (statConst.IsCharacterStat())
+                {
+                    statProgress = gameData.ProgressData.findCharData(avatarId).findStat(statId);
                 }
                 else
                 {
-                    statProgress = gameData.ProgressData.findCharData(characterId).findStat(statId);
+                    statProgress = gameData.ProgressData.findGlobalStat(statId);
                 }
             }
 
@@ -96,10 +112,36 @@ public class StatBarController : MonoBehaviour
 
     private void OnValueChanged(float oldValue, float newValue)
     {
+        float percentage = Mathf.Clamp(((float)(newValue - MinValue)) / (MaxValue - MinValue), 0f, 1f);
+        
         if (fillBarTransform != null)
         {
-            float percentage = Mathf.Clamp(((float)(newValue - MinValue)) / (MaxValue - MinValue), 0f, 1f);
-            fillBarTransform.anchorMax = new Vector2(percentage, fillBarTransform.anchorMax.y);
+            fillBarTransform.anchorMax = new Vector2(percentage, fillBarTransform.anchorMax.y);            
+        }
+
+        if (fillBarImage != null)
+        {
+            float maxReachedPercentage = 0f;
+            Texture2D maxPercentageTexture = fillBarMinLevelTexture;
+            if (fillBarLevels != null)
+            {
+                foreach (StatBarImageAndLevel level in fillBarLevels)
+                {
+                    if (level != null)
+                    {
+                        if (percentage > level.percentage && level.percentage > maxReachedPercentage)
+                        {
+                            maxReachedPercentage = level.percentage;
+                            maxPercentageTexture = level.texture;
+                        }
+                    }
+                }
+            }
+
+            if (maxPercentageTexture != null)
+            {
+                fillBarImage.texture = maxPercentageTexture;
+            }
         }
     }
 

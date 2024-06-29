@@ -46,23 +46,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterConsts:
   - id: Player
-    avatarTexture: {fileID: 0}
+    avatarTexture: {fileID: 2800000, guid: 7d83781408a032d45b844bd48a5b2699, type: 3}
     SatisfationBarColor: {r: 0, g: 0, b: 0, a: 0}
     SatisfationBarForeground: {fileID: 0}
   - id: c_00
-    avatarTexture: {fileID: 0}
+    avatarTexture: {fileID: 2800000, guid: 783058f18cf0ccf4086d5b294f5447f7, type: 3}
     SatisfationBarColor: {r: 0, g: 0, b: 0, a: 0}
     SatisfationBarForeground: {fileID: 0}
   - id: c_01
-    avatarTexture: {fileID: 0}
+    avatarTexture: {fileID: 2800000, guid: e721217b33d17b746871509abcc75996, type: 3}
     SatisfationBarColor: {r: 0, g: 0, b: 0, a: 0}
     SatisfationBarForeground: {fileID: 0}
   - id: c_02
-    avatarTexture: {fileID: 0}
+    avatarTexture: {fileID: 2800000, guid: e0b58a5820e55674c9ff3b4bfc280665, type: 3}
     SatisfationBarColor: {r: 0, g: 0, b: 0, a: 0}
     SatisfationBarForeground: {fileID: 0}
   - id: c_03
-    avatarTexture: {fileID: 0}
+    avatarTexture: {fileID: 2800000, guid: 3ab363f949f868942a9242cfb52058f1, type: 3}
     SatisfationBarColor: {r: 0, g: 0, b: 0, a: 0}
     SatisfationBarForeground: {fileID: 0}
   playerCharacterId: Player
