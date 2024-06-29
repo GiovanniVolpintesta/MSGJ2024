@@ -1,0 +1,46 @@
+This is the FONTLOG file for the "Poetirey" Font.
+
+
+This file provides detailed information on the "Poetirey" Font Software.
+This information should be distributed along with the "Poetirey" font
+and any derivative works.
+
+
+Basic Font Information
+
+"Poetirey" Font is a Unicode typeface family that supports all languages
+that use the Latin script and its variants, and could be expanded to support
+other scripts.
+
+
+"Poetirey" Font you'll find at: https://glottastudio.com
+
+"Poetirey" Font is created with FontCreator.
+
+
+More specifically, this release supports the following Unicode ranges:
+
+ - Basic Latin and Controls 
+ - General Punctuation 
+ - Currency Symbols 
+ - Mathematical Operators 
+
+This release contains:
+
+ - Poetirey.ttf
+ - Poetirey.otf
+ - Poetirey.woff
+ - SIL - OpenFont License.txt - official license text
+
+Acknowledgements
+
+If you make modifications be sure to add your name (N), email (E), web-address
+(if you have one) (W) and description (D).
+
+
+History
+
+This is my idea about pencil brush font styles.
+
+24 september 2023 (info@glottastudio.com)
+
