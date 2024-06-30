@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameDataManager : MonoBehaviour
 {
     [SerializeField]
-    private string DialogStructureFilePath;
+    private string DialogStructureResourcePath;
 
     [SerializeField]
     private CharactersData CharactersData;
@@ -44,12 +44,10 @@ public class GameDataManager : MonoBehaviour
 
             Dialogue.ResetDefaultIdGenerator();
 
-            using (StreamReader reader = new StreamReader(DialogStructureFilePath))
-            {
-                GameData.createFromJSON(reader.ReadToEnd());
-                gameData = GameData.Instance;
-                gameData.Initialize(CharactersData, dialoguesPerDay, dayStatId);
-            }
+            TextAsset txtAsset = (TextAsset)Resources.Load(DialogStructureResourcePath, typeof(TextAsset));
+            GameData.createFromJSON(txtAsset.text);
+            gameData = GameData.Instance;
+            gameData.Initialize(CharactersData, dialoguesPerDay, dayStatId);
         }
     }
 
