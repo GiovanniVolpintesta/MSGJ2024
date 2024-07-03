@@ -1,8 +1,8 @@
 {
 	"stats": [
-		{ "id":"profit", "isGlobal":"true", "min":10, "max":100, "initValue":50 },
-		{ "id":"satisfation", "isGlobal":"false", "min":10, "max":100, "initValue":50 },
-		{ "id":"day", "isGlobal":"true", "min":1, "max":7, "initValue":1}
+		{ "id":"profit", "isGlobal":"true", "min":5, "max":50, "initValue":25 },
+		{ "id":"satisfation", "isGlobal":"false", "min":5, "max":50, "initValue":25 },
+		{ "id":"day", "isGlobal":"true", "min":0, "max":7, "initValue":0}
 	],	
 	"dialogues": [
 		{
@@ -10,15 +10,15 @@
 			"characterId": "c_00",
 			"unlockConditions": [
 				{"type":"statHigherEqual", "id":"day", "value":1},
-				{"type":"statLowerEqual", "id":"profit", "value":40}
+				{"type":"statLowerEqual", "id":"profit", "value":20}
 			],
 			"priority": 1,
 			"messages": [
-				{ "type":"received", "text": "DIECIMILA PUNTI???"},
+				{ "type":"received", "text": "CINQUEMILA PUNTI???"},
 				{ "type":"sent", "text": "Buongiorno anche a lei capo."},
-				{ "type":"received", "text": "DIECIMILA STRAMALEDETTI PUNTI???"},
+				{ "type":"received", "text": "CINQUEMILA STRAMALEDETTI PUNTI???"},
 				{ "type":"sent", "text": "Non la seguo signore."},
-				{ "type":"received", "text": "LE TUE BRAVATE CI SONO COSTATE DIECIMILA PUNTI IN BORSA!"},
+				{ "type":"received", "text": "LE TUE BRAVATE CI SONO COSTATE CINQUEMILA PUNTI IN BORSA!"},
 				{ "type":"sent", "text": "Oh… Ma come è possibile?"},
 				{ "type":"received", "text": "NON LO SO!"},
 				{ "type":"received", "text": " MA VEDI DI DARTI UNA REGOLATA!"}
@@ -29,7 +29,7 @@
 			"characterId": "c_00",
 			"unlockConditions": [
 				{"type":"statEqual", "id":"day", "value":2},
-				{"type":"statHigherEqual", "id":"profit", "value":60}
+				{"type":"statHigherEqual", "id":"profit", "value":30}
 			],
 			"priority": 1,
 			"messages": [
@@ -60,7 +60,7 @@
 			"id": "d_0004",
 			"characterId": "c_00",
 			"unlockConditions": [
-				{"type":"statLowerEqual", "id":"profit", "value":25},
+				{"type":"statLowerEqual", "id":"profit", "value":10},
 				{"type":"dialoguePlayed", "id":"d_0303"}
 			],
 			"priority": 1,
@@ -77,7 +77,7 @@
 			"id": "d_0005",
 			"characterId": "c_00",
 			"unlockConditions": [
-				{"type":"statHigherEqual", "id":"profit", "value":75},
+				{"type":"statHigherEqual", "id":"profit", "value":40},
 				{"type":"dialoguePlayed", "id":"d_0104"},
 				{"type":"dialoguePlayed", "id":"d_0201"},
 				{"type":"dialoguePlayed", "id":"d_0303"}
@@ -93,6 +93,84 @@
 				{ "type":"received", "text": "Oh no! Tu mi hai salvato. Il tuo lavoro mi sta facendo guadagnare come mai prima d’ora"},
 				{ "type":"received", "text": "Stai andando meglio di quanto potessi mai sperare"},
 				{ "type":"sent", "text": "Ehm grazie... credo."}
+			]
+		},
+		{
+			"id": "d_0006",
+			"characterId": "c_00",
+			"unlockConditions": [
+				{"type":"statEqual", "id":"day", "value":0}
+			],
+			"priority": 2,
+			"messages": [
+				{ "type":"received", "text": "Ti do il benvenuto, mio piccolo impiegato."},
+				{ "type":"sent", "text": "Grazie signore."},
+				{ "type":"received", "text": "Spero tu sia pronto per il tuo primo giorno di lavoro."},
+				{ "type":"sent", "text": "Certamente signore. Sono molto emozionato."},
+				{ "type":"received", "text": "Molto bene."},
+				{ "type":"received", "text": "Beh auguri figliolo."}
+			]
+		},
+		{
+			"id": "d_0007",
+			"characterId": "c_00",
+			"unlockConditions": [
+				{"type":"statEqual", "id":"day", "value":0}
+			],
+			"priority": 1,
+			"messages": [
+				{ "type":"received", "text": "Oh scusa, mi stavo dimenticando che dovevo spiegarti quali fossero le tue mansioni."},
+				{ "type":"received", "text": "Ogni volta che senti il telefono squillare rispondi. Non c'è fretta, i clienti non riattaccheranno per un po' di attesa."},
+				{ "type":"received", "text": "Una volta che il cliente ti avrà spiegato il suo problema, tu dovrai aiutarlo scegliendo la risposta corretta."},
+				{ "type":"received", "text": "Fai attenzione perché le tue risposte possono determinare sia la soddisfazione del cliente che gli introiti dell'azienda."},
+				{ "type":"received", "text": "Sui monitor potrai vedere entrambe queste statistiche."},
+				{ "type":"received", "text": "In alto ci sono gli introidi, mentre in basso la soddisfazione dei clienti."},
+				{ "type":"received", "text": "Per adesso ti abbiamo assegnato solo 3 clienti."},
+				{ "type":"received", "text": "Ma se terminerai questa settimana potremo darti incarichi più stimolanti."},
+				{ "type":"received", "text": "Bene, penso sia tutto."}
+			]
+		},
+		{
+			"id": "d_0008",
+			"characterId": "c_00",
+			"unlockConditions": [
+				{"type":"statEqual", "id":"day", "value":0}
+			],
+			"priority": 0,
+			"messages": [
+				{ "type":"received", "text": "Scusa, stavo dimenticando di nuovo. Visto che sei un tirocinante riceverai solo 3 chiamate al giorno, tra cui forse una mia."},
+				{ "type":"received", "text": "Non vogliamo che tu venga soppraffato la tua prima settimana."},
+				{ "type":"received", "text": "Ora ti saluto davvero.Buona fortuna."},
+				{ "type":"sent", "text": "Grazie signore, non la deluderò."}
+			]
+		},
+		{
+			"id": "d_0009",
+			"characterId": "c_00",
+			"unlockConditions": [
+				{"type":"statHigherEqual", "id":"day", "value":7}
+			],
+			"priority": 1,
+			"messages": [
+				{ "type":"received", "text": "CONGRATULAZIONI!"},
+				{ "type":"received", "text": "La tua settimana di prova e finita."},
+				{ "type":"received", "text": "Ora sei fai ufficialmente parte della famiglia Evil SA!"},
+				{ "type":"sent", "text": "Oh...grazie signore. Non so proprio cosa dire."}
+			]
+		},
+		{
+			"id": "d_0010",
+			"characterId": "c_00",
+			"unlockConditions": [
+				{"type":"statLowerEqual", "id":"profit", "value":5}
+			],
+			"priority": 1,
+			"messages": [
+				{ "type":"received", "text": "Sono estremamente deluso da te."},
+				{ "type":"received", "text": "Pensavo fossi un dipendente migliore, ma invece..."},
+				{ "type":"sent", "text": "Mi dispiace signore, io..."},
+				{ "type":"received", "text": "Non dire niente. Libera solo la scrivania."},
+				{ "type":"received", "text": "Sei licenziato."}
 			]
 		},
 		{
@@ -858,8 +936,8 @@
 			"messages": [
 				{ "type":"received", "text": "Ciao voce... ho una sorpresa per te."},
 				{ "type":"sent", "text": "Aspetti. Come una sorpresa per me?"},
-				{ "type":"sent", "text": "Oh sì. Ho appena creato un dispositivo con cui controllare le menti delle persone."},
-				{ "type":"sent", "text": " In questo modo avrai tante altre voci a farti compagnia."}
+				{ "type":"received", "text": "Oh sì. Ho appena creato un dispositivo con cui controllare le menti delle persone."},
+				{ "type":"received", "text": " In questo modo avrai tante altre voci a farti compagnia."}
 			],
 			"choices": [
 				{"boxText": "Oh che bello",
