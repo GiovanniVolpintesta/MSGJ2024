@@ -320,7 +320,8 @@
 				{"boxText": "Lo blocchi",
 					"messages": [
 						{ "type":"sent", "text": "Non clicchi e tolga l’amicizia!"},
-						{ "type":"received", "text": "Oh Caro! Non è proprio nelle mie corde essere così rude... togliere l’amicizia ad un amico che invece si dovrebbe conoscere... Ma come sempre mi fido di Lei."},
+						{ "type":"received", "text": "Oh Caro! Non è proprio nelle mie corde essere così rude... togliere l’amicizia ad un amico che invece si dovrebbe conoscere..."},
+						{ "type":"received", "text": "Ma come sempre mi fido di Lei."},
 						{ "type":"statIncrement", "stat":"satisfation", "value": 3},
 						{ "type":"statIncrement", "stat":"profit", "value": -1}
 					]
@@ -328,7 +329,9 @@
 				{"boxText": "Lo insulti",
 					"messages": [
 						{ "type":"sent", "text": "Gli dica che è un ladro."},
-						{ "type":"received", "text": "Non ha idea di quanti messaggi cattivi mi ha scritto... si è arrabbiato così, di colpo... si vede che era una persona di cui non fidarsi."},
+						{ "type":"received", "text": "Non ha idea di quanti messaggi cattivi mi ha scritto..."},
+						{ "type":"received", "text": "Si è arrabbiato così, di colpo..."},
+						{ "type":"received", "text": "Si vede che era una persona di cui non fidarsi."},
 						{ "type":"statIncrement", "stat":"satisfation", "value": -1},
 						{ "type":"statIncrement", "stat":"profit", "value": 1}
 					]
@@ -379,7 +382,8 @@
 				{"boxText": "Deve fare doppio click",
 					"messages": [
 						{ "type":"sent", "text": "Deve cliccarci due volte sopra!"},
-						{ "type":"received", "text": "Oh!! Lo schermo è diventato tutto nero! C’è una scritta che dice “R A N S O M”, mi scusi, non so leggere bene l’inglese... Proverò a spegnere il computer, lei fa sempre così tanto per me e non la voglio disturbare più oggi... a Buon Rendere"},
+						{ "type":"received", "text": "Oh!! Lo schermo è diventato tutto nero! C’è una scritta che dice “R A N S O M”, mi scusi, non so leggere bene l’inglese..."},
+						{ "type":"received", "text": "Proverò a spegnere il computer, lei fa sempre così tanto per me e non la voglio disturbare più oggi... a Buon Rendere"},
 						{ "type":"statIncrement", "stat":"satisfation", "value": -5},
 						{ "type":"statIncrement", "stat":"profit", "value": 5}
 					]
@@ -411,10 +415,11 @@
 						{ "type":"statIncrement", "stat":"profit", "value": 0}
 					]
 				},
-				{"boxText": "Chiami il nipoter",
+				{"boxText": "Chiami il nipote",
 					"messages": [
 						{ "type":"sent", "text": "Mi passi subito suo nipote"},
 						{ "type":"received", "text": "Mio nipote dice di pigiare sopra, è sempre stato curioso. Me lo conferma la sua maestra di Scienze. Chissà cosa succederà poi"},
+						{ "type":"received", "text": "* CONNESSIONE INTERROTTA DALL'UTENTE *"},
 						{ "type":"statIncrement", "stat":"satisfation", "value": -3},
 						{ "type":"statIncrement", "stat":"profit", "value": 0}
 					]
@@ -438,13 +443,14 @@
 			"priority": 0,
 			"messages": [
 				{ "type":"received", "text": "*ROAR*"},
-				{ "type":"received", "text": "...hem hem... Buon... buon giorno."},
+				{ "type":"received", "text": "...hem hem... Buon... buon giornowwr."},
 				{ "type":"sent", "text": "Uh... buongiorno... chi parla?"},
 				{ "type":"received", "text": "Che t’importaw cosa sonowwrrr... che ti importa come mi chiamowwwrr"},
 				{ "type":"sent", "text": "Ehhhm , è giusto per aiutarla signor… ?"},
 				{ "type":"received", "text": "Mi hanno chiamato Lilli... stupido nome... *roarrr*"},
 				{ "type":"sent", "text": "Signorina Lilli! In cosa posso aiutarla?"},
-				{ "type":"received", "text": "SONO UN MASCHIO, *ROAR*... dimmi... hai accesso alla piantina di questo luogo? Mi sento perso... Ho bisogno di prendere un po’ d’aria... da dove si esce?"}
+				{ "type":"received", "text": "SONO UN MASCHIO *ROAR*"},
+				{ "type":"received", "text": "... dimmi... hai accesso alla piantina di questo luogo? Mi sento perso... Ho bisogno di prendere un po’ d’aria... da dove si esce?"}
 			],
 			"choices": [
 				{"boxText": "Dopo le cucine",
@@ -488,7 +494,8 @@
 			"messages": [
 				{ "type":"received", "text": "*ROAR* Devo aspettare ancora tanto?"},
 				{ "type":"sent", "text": "Signor Lilli! Ha bisogno?"},
-				{ "type":"received", "text": "Sì, Ho bisogno di sapere DOVE SI TROVANO quei brutti ceffi che mi hanno imprigionato. Vanno in giro con camici bianchi e siringhe. Faccia il bravo e mi aiuti."}
+				{ "type":"received", "text": "Sì, Ho bisogno di sapere DOVE SI TROVANO quei brutti ceffi che mi hanno imprigionato."},
+				{ "type":"received", "text": "Vanno in giro con camici bianchi e siringhe. Faccia il bravo e mi aiuti."}
 			],
 			"choices": [
 				{"boxText": "Sono in cucina",
@@ -515,7 +522,9 @@
 				{"boxText": "Sono scappati",
 					"messages": [
 						{ "type":"sent", "text": "Sono tutti scappati, li ho avvisati io."},
-						{ "type":"received", "text": "Bah... ed io, che aspetto tutto questo tempo, per parlare con uno stupido di un’azienda stupida *roar* si aspetti una ramanzina dal suo capo *roar* quanto odio la parola ramanzina."},
+						{ "type":"received", "text": "Bah... ed io, che aspetto tutto questo tempo, per parlare con uno stupido di un’azienda stupida *roar*"},
+						{ "type":"received", "text": "Si aspetti una ramanzina dal suo capo *roar*"},
+						{ "type":"received", "text": "quanto odio la parola rrramanzina."},
 						{ "type":"statIncrement", "stat":"satisfation", "value": -3},
 						{ "type":"statIncrement", "stat":"profit", "value": -3}
 					]
@@ -542,7 +551,7 @@
 				{"boxText": "Nella sala Cinema",
 					"messages": [
 						{ "type":"sent", "text": "Sono tutti nella sala Cinema."},
-						{ "type":"received", "text": "Spero che il film “Colazione Da Tiffany” sia di loro gradimento *hihihihi*."},
+						{ "type":"received", "text": "Spero che il film “Colazione Da Lilli” sia di loro gradimento *hihihihi*."},
 						{ "type":"statIncrement", "stat":"satisfation", "value": 5},
 						{ "type":"statIncrement", "stat":"profit", "value": 5}
 					]
@@ -550,7 +559,8 @@
 				{"boxText": "Nel recinto dei T-Rex",
 					"messages": [
 						{ "type":"sent", "text": "Li trova nel recinto del sig. Rex"},
-						{ "type":"received", "text": "Ah, sì, l’iracondo... ma non sa con chi ha a che fare... Lo sa? Ha le braccine corte per un motivo: non ha necessità di chiamare questo STUPIDO, CALL, CENTER..."},
+						{ "type":"received", "text": "Ah, sì, l’Iracondo... ma non sa con chi ha a che fare..."},
+						{ "type":"received", "text": "Lo sa? Ha le braccine corte per un motivo: non ha necessità di chiamare questo STUPIDO, CALL, CENTER..."},
 						{ "type":"statIncrement", "stat":"satisfation", "value": -3},
 						{ "type":"statIncrement", "stat":"profit", "value": -1}
 					]
@@ -617,9 +627,9 @@
 			],
 			"priority": 0,
 			"messages": [
-				{ "type":"received", "text": "...si pregano i signori passeggeri... le scialuppe di salvataggio..."},
+				{ "type":"received", "text": "*...si pregano i signori passeggeri... le scialuppe di salvataggio...*"},
 				{ "type":"sent", "text": "Pronto?"},
-				{ "type":"received", "text": "MI, SENTE? STUPIDO, CALL, CENTERR"},
+				{ "type":"received", "text": "MI, SENTERR? STUPIDO, CALL, CENTERR"},
 				{ "type":"sent", "text": "Ohh signor Lilli, dica!"},
 				{ "type":"received", "text": "*hem hem* mi chiedevo *glub* quando passa la prossima nave? Ho necessità di esplorare il mondo! Chissà cosa c’è la fuori."}
 			],
@@ -637,8 +647,8 @@
 					"messages": [
 						{ "type":"sent", "text": "Non è un cargo per animali, non l’accetteranno."},
 						{ "type":"received", "text": "Sarò io ad accettare loro, nella mia bocca, stupido call center..."},
-						{ "type":"statIncrement", "stat":"satisfation", "value": 0},
-						{ "type":"statIncrement", "stat":"profit", "value": 0}
+						{ "type":"statIncrement", "stat":"satisfation", "value": -3},
+						{ "type":"statIncrement", "stat":"profit", "value": -3}
 					]
 				},
 				{"boxText": "Prenda il bus",
@@ -671,7 +681,7 @@
 				{"boxText": "Hollywood",
 					"messages": [
 						{ "type":"sent", "text": "Che ne dice di Hollywood?"},
-						{ "type":"received", "text": "La terra dei vip, very important pranzi * shhhlurp * mmmmmmhhh * diventerò famoso e mangerò in tutto il mondo."},
+						{ "type":"received", "text": "La terra dei V.I.P., Very Important Pranzi * shhhlurp * mmmmmmhhh * diventerò famoso e mangerò in tutto il mondo."},
 						{ "type":"statIncrement", "stat":"satisfation", "value": 5},
 						{ "type":"statIncrement", "stat":"profit", "value": 3}
 					]
@@ -750,7 +760,7 @@
 				{ "type":"received", "text": "Cioé non è proprio un mio amico..."}
 			],
 			"choices": [
-				{"boxText": "Proviamo la cit.",
+				{"boxText": "La cambi con...",
 					"messages": [
 						{ "type":"sent", "text": " Provi con franksmettiladiscroccareinternet."},
 						{ "type":"received", "text": "Grande Giove!"},
