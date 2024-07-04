@@ -1,6 +1,7 @@
 using data;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameDataManager : MonoBehaviour
@@ -20,6 +21,8 @@ public class GameDataManager : MonoBehaviour
     private string dayStatId = "day";
     [SerializeField]
     private string[] sendersCounted = { };
+    [SerializeField]
+    private string[] savedStatHistories = { };
 
     // Start is called before the first frame update
     void Awake()
@@ -48,8 +51,12 @@ public class GameDataManager : MonoBehaviour
             TextAsset txtAsset = (TextAsset)Resources.Load(DialogStructureResourcePath, typeof(TextAsset));
             GameData.createFromJSON(txtAsset.text);
             gameData = GameData.Instance;
-            gameData.Initialize(CharactersData, dialoguesPerDay, dayStatId, sendersCounted);
+            gameData.Initialize(CharactersData, dialoguesPerDay, dayStatId, sendersCounted, savedStatHistories);
         }
     }
 
+    private void OnDestroy()
+    {
+        GameData.Destroy();
+    }
 }

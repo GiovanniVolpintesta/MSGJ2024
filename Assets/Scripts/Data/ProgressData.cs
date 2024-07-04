@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace data
 {
     public delegate void OnValueChanged(float OldValue, float NewValue);
-    public delegate void OnDialogueEnded(string dialogue);
 
     [System.Serializable]
     public class ProgressData
     {
+        public delegate void OnDialogueEnded (Dialogue dialogue, bool gameTimeIncremented);
+        public event OnDialogueEnded onDialogueEnded;
+
         [SerializeField]
         private List<CharacterProgressData> charactersData;
         public CharacterProgressData findCharData(string id)
@@ -34,6 +37,8 @@ namespace data
 
         [SerializeField]
         private List<DialogueProgressData> dialogues;
+        public ICollection<DialogueProgressData> Dialogues { get { return dialogues.AsReadOnlyCollection(); } }
+
         public DialogueProgressData findDialogue(string id)
         {
             foreach (DialogueProgressData e in dialogues)
@@ -72,7 +77,18 @@ namespace data
             {
                 if (d != null)
                 {
-                    d.onDialogueEnded += OnDialogueEnded;
+                    d.onDialogueEnded += OnDialogueEndedCallback;
+                }
+            }
+        }
+
+        public void Unbind()
+        {
+            foreach (DialogueProgressData d in dialogues)
+            {
+                if (d != null)
+                {
+                    d.onDialogueEnded -= OnDialogueEndedCallback;
                 }
             }
         }
@@ -119,21 +135,32 @@ namespace data
             return true;
         }
 
-        private void OnDialogueEnded(string dialogueId)
+        private void OnDialogueEndedCallback(string dialogueId)
         {
             Dialogue dialogue = GameData.Instance.findDialogue(dialogueId);
-            if (dialogue != null && dialogue.CharacterId != null
-                && GameData.Instance.SendersCounted.Contains(dialogue.CharacterId))
-            {
-                // TODO: remove this logic and substitute with a time stat defined in json
-                playedDialogues++;
-                playedDialoguesInLastDay++;
-                if (playedDialoguesInLastDay >= GameData.Instance.DialoguesPerDay)
-                {
-                    StatProgressData dayProgressData = findGlobalStat(GameData.Instance.DayStatId);
-                    if (dayProgressData != null) dayProgressData.incrementValue(1);
 
-                    playedDialoguesInLastDay -= GameData.Instance.DialoguesPerDay;
+            bool incrementTime = false;
+            if (dialogue != null)
+            {
+                if (dialogue.CharacterId != null && GameData.Instance.SendersCounted.Contains(dialogue.CharacterId))
+                {
+                    incrementTime = true;
+
+                    // TODO: remove this logic and substitute with a time stat defined in json
+                    playedDialogues++;
+                    playedDialoguesInLastDay++;
+                    if (playedDialoguesInLastDay >= GameData.Instance.DialoguesPerDay)
+                    {
+                        StatProgressData dayProgressData = findGlobalStat(GameData.Instance.DayStatId);
+                        if (dayProgressData != null) dayProgressData.incrementValue(1);
+
+                        playedDialoguesInLastDay -= GameData.Instance.DialoguesPerDay;
+                    }
+                }
+
+                if (onDialogueEnded != null)
+                {
+                    onDialogueEnded(dialogue, incrementTime);
                 }
             }
         }
@@ -197,10 +224,22 @@ namespace data
         private int max = int.MaxValue;
         public int Max { get { return max; } }
 
-        public StatProgressData(string id, int startingValue)
+        [SerializeField]
+        private bool saveHistory;
+        [SerializeField]
+        private List<int> history = new List<int>();
+        public ICollection<int> History { get { return history.AsReadOnlyCollection(); } }
+
+        public StatProgressData(string id, int startingValue, bool saveHistory)
         {
             this.id = id;
             this.value = startingValue;
+            this.saveHistory = saveHistory;
+            history.Clear();
+            if (saveHistory)
+            {
+                history.Add(startingValue);
+            }
         }
 
         public void setConstraints(int minValue, int maxValue)
@@ -216,6 +255,10 @@ namespace data
             if (oldValue != value)
             {
                 this.value = value;
+                if (saveHistory)
+                {
+                    history.Add(value);
+                }
                 Debug.Log("Stat " + Id + " changed from " + oldValue + " to " + value);
                 if (onValueChanged != null)
                 {
@@ -230,6 +273,8 @@ namespace data
     [System.Serializable]
     public class DialogueProgressData
     {
+        public delegate void OnDialogueEnded(string dialogue);
+
         public event OnDialogueEnded onDialogueEnded;
 
         [SerializeField]

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace data
     {
         private static GameData instance;
         public static GameData Instance { get { return instance; } }
-
+        
         [SerializeField]
         private Stat[] stats;
 
@@ -38,7 +39,17 @@ namespace data
             instance = JsonUtility.FromJson<GameData>(jsonString);
         }
 
-        public void Initialize(CharactersData charactersData, int dialoguedPerDay, string dayStatId, string[] sendersCounted)
+        public static void Destroy()
+        {
+            if (instance != null)
+            {
+                instance.Unbind();
+                instance = null;
+            }
+        }
+
+
+        public void Initialize(CharactersData charactersData, int dialoguedPerDay, string dayStatId, string[] sendersCounted, string[] savedStatHistories)
         {
             if (!initialized)
             {
@@ -47,12 +58,14 @@ namespace data
                 this.dayStatId = dayStatId;
                 this.sendersCounted = sendersCounted;
 
-                InitializeProgressData();
+                InitializeProgressData(savedStatHistories);
 
                 foreach (Stat s in stats) s.Initialize(this);
                 foreach (Dialogue d in dialogues) d.Initialize(this);
 
                 initialized = true;
+
+                Bind();
 
                 extractNewDialog();
             }
@@ -62,7 +75,23 @@ namespace data
             }
         }
 
-        private void InitializeProgressData ()
+        private void Bind()
+        {
+            if (progressData != null)
+            {
+                progressData.Bind();
+            }
+        }
+
+        private void Unbind()
+        {
+            if (progressData != null)
+            {
+                progressData.Unbind();
+            }
+        }
+
+        private void InitializeProgressData (string[] savedStatHistories)
         {
             progressData = new ProgressData();
 
@@ -70,7 +99,7 @@ namespace data
             {
                 if (s != null && s.IsGlobalStat())
                 {
-                    StatProgressData statProgressData = new StatProgressData(s.Id, s.InitValue);
+                    StatProgressData statProgressData = new StatProgressData(s.Id, s.InitValue, savedStatHistories.Contains(s.Id));
                     statProgressData.setConstraints(s.Min, s.Max);
                     progressData.addGlobalStat(statProgressData);
                 }
@@ -86,7 +115,7 @@ namespace data
                     {
                         if (s != null && s.IsCharacterStat())
                         {
-                            StatProgressData statProgressData = new StatProgressData(s.Id, s.InitValue);
+                            StatProgressData statProgressData = new StatProgressData(s.Id, s.InitValue, savedStatHistories.Contains(s.Id));
                             statProgressData.setConstraints(s.Min, s.Max);
                             characterProgressData.addStat(statProgressData);
                         }
@@ -108,8 +137,6 @@ namespace data
                     progressData.addDialogueData(dialogueProgressData);
                 }
             }
-
-            progressData.Bind();
         }
 
         public Stat findStat(string id)

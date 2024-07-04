@@ -62,3 +62,5 @@ MonoBehaviour:
   - c_01
   - c_02
   - c_03
+  savedStatHistories:
+  - profit
