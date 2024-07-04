@@ -381,7 +381,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6ce323c3266bd5d4c980c3c0236d9217, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -452,6 +452,6 @@ MonoBehaviour:
   fillBarMinLevelTexture: {fileID: 2800000, guid: 5cb6692690de3354890c8dd528d3bb62, type: 3}
   fillBarLevels:
   - percentage: 0.35
-    texture: {fileID: 2800000, guid: 883bbf1e01c0e1c418aaeeb72c9857f3, type: 3}
-  - percentage: 0.75
     texture: {fileID: 2800000, guid: 523ef083213fdfe4494c4a44208742b9, type: 3}
+  - percentage: 0.75
+    texture: {fileID: 2800000, guid: 6ce323c3266bd5d4c980c3c0236d9217, type: 3}
