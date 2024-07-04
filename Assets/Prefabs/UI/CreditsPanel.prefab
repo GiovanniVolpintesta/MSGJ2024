@@ -667,8 +667,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "COPYRIGHT\nluglio 2024\n\n \xA9 Giovanni Volpintesta\nProgrammazione\n\n
-    \xA9 Edoardo Gregori\nGame Design, Storytelling\n\n \xA9 Massimo Lisanti\nGame
-    Design, Storytelling, Grafica\n\n \xA9 Silvia Lisanti\nGrafica\n"
+    \xA9 Edoardo Gregori\nGame Design\n\n \xA9 Massimo Lisanti\nGame Design\n\n \xA9
+    Silvia Lisanti\nGrafica\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5230bf7d9ced48949ad43c6d88d413c7, type: 2}
   m_sharedMaterial: {fileID: 2917686679165070663, guid: 5230bf7d9ced48949ad43c6d88d413c7, type: 2}

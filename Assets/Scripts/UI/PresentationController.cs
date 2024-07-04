@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PresentationController : MonoBehaviour
@@ -27,6 +28,9 @@ public class PresentationController : MonoBehaviour
     string startRingingEvent = "startRinging";
     [SerializeField]
     string stopRingingEvent = "stopRinging";
+
+    [SerializeField]
+    string creditsSceneName;
 
     float dialoguePanelFadeSeconds = 1;
 
@@ -176,7 +180,7 @@ public class PresentationController : MonoBehaviour
             currentDialogue = GameData.Instance.extractNewDialog();
             if (currentDialogue == null || !currentDialogue.canExecute())
             {
-                Debug.LogError("No new dialogue can be executed.");
+                SceneManager.LoadScene(creditsSceneName);
             }
         }
     }
