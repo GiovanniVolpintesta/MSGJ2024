@@ -32,8 +32,6 @@ public class StatImageChanger : MonoBehaviour
     Stat stat = null;
     StatProgressData statProgress = null;
 
-    bool isStarted = false;
-
     void Start()
     {
         stat = GameData.Instance.findStat(statId);
@@ -55,8 +53,6 @@ public class StatImageChanger : MonoBehaviour
         Bind();
 
         Refresh();
-
-        isStarted = true;
     }
 
 

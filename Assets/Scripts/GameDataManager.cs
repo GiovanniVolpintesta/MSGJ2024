@@ -44,8 +44,6 @@ public class GameDataManager : MonoBehaviour
         }
         else
         {
-            DontDestroyOnLoad(this.gameObject);
-
             Dialogue.ResetDefaultIdGenerator();
 
             TextAsset txtAsset = (TextAsset)Resources.Load(DialogStructureResourcePath, typeof(TextAsset));
