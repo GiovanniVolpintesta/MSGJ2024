@@ -2,7 +2,7 @@
 	"stats": [
 		{ "id":"profit", "isGlobal":"true", "min":5, "max":50, "initValue":25 },
 		{ "id":"satisfation", "isGlobal":"false", "min":5, "max":50, "initValue":25 },
-		{ "id":"day", "isGlobal":"true", "min":0, "max":7, "initValue":0}
+		{ "id":"day", "isGlobal":"true", "min":1, "max":7, "initValue":1}
 	],	
 	"dialogues": [
 		{
@@ -99,9 +99,9 @@
 			"id": "d_0006",
 			"characterId": "c_00",
 			"unlockConditions": [
-				{"type":"statEqual", "id":"day", "value":0}
+				{"type":"statEqual", "id":"day", "value":1}
 			],
-			"priority": 2,
+			"priority": 10,
 			"messages": [
 				{ "type":"received", "text": "Ti do il benvenuto, mio piccolo impiegato."},
 				{ "type":"sent", "text": "Grazie signore."},
@@ -115,9 +115,9 @@
 			"id": "d_0007",
 			"characterId": "c_00",
 			"unlockConditions": [
-				{"type":"statEqual", "id":"day", "value":0}
+				{"type":"statEqual", "id":"day", "value":1}
 			],
-			"priority": 1,
+			"priority": 9,
 			"messages": [
 				{ "type":"received", "text": "Oh scusa, mi stavo dimenticando che dovevo spiegarti quali fossero le tue mansioni."},
 				{ "type":"received", "text": "Ogni volta che senti il telefono squillare rispondi. Non c'è fretta, i clienti non riattaccheranno per un po' di attesa."},
@@ -128,20 +128,6 @@
 				{ "type":"received", "text": "Per adesso ti abbiamo assegnato solo 3 clienti."},
 				{ "type":"received", "text": "Ma se terminerai questa settimana potremo darti incarichi più stimolanti."},
 				{ "type":"received", "text": "Bene, penso sia tutto."}
-			]
-		},
-		{
-			"id": "d_0008",
-			"characterId": "c_00",
-			"unlockConditions": [
-				{"type":"statEqual", "id":"day", "value":0}
-			],
-			"priority": 0,
-			"messages": [
-				{ "type":"received", "text": "Scusa, stavo dimenticando di nuovo. Visto che sei un tirocinante riceverai solo 3 chiamate al giorno, tra cui forse una mia."},
-				{ "type":"received", "text": "Non vogliamo che tu venga soppraffato la tua prima settimana."},
-				{ "type":"received", "text": "Ora ti saluto davvero.Buona fortuna."},
-				{ "type":"sent", "text": "Grazie signore, non la deluderò."}
 			]
 		},
 		{

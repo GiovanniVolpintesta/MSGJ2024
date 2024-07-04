@@ -23,6 +23,9 @@ namespace data
         private string dayStatId;
         public string DayStatId { get { return dayStatId; } }
 
+        private string[] sendersCounted;
+        public ICollection<string> SendersCounted { get { return sendersCounted.AsReadOnlyCollection(); } }
+
         private CharactersData charactersData;
         [SerializeField]
         private ProgressData progressData;
@@ -35,13 +38,14 @@ namespace data
             instance = JsonUtility.FromJson<GameData>(jsonString);
         }
 
-        public void Initialize(CharactersData charactersData, int dialoguedPerDay, string dayStatId)
+        public void Initialize(CharactersData charactersData, int dialoguedPerDay, string dayStatId, string[] sendersCounted)
         {
             if (!initialized)
             {
                 this.charactersData = charactersData;
                 this.dialoguedPerDay = dialoguedPerDay;
                 this.dayStatId = dayStatId;
+                this.sendersCounted = sendersCounted;
 
                 InitializeProgressData();
 

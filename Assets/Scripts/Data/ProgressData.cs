@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 namespace data
 {
     public delegate void OnValueChanged(float OldValue, float NewValue);
-    public delegate void OnEvent();
+    public delegate void OnDialogueEnded(string dialogue);
 
     [System.Serializable]
     public class ProgressData
@@ -121,17 +119,22 @@ namespace data
             return true;
         }
 
-        private void OnDialogueEnded()
+        private void OnDialogueEnded(string dialogueId)
         {
-            // TODO: remove this logic and substitute with a time stat defined in json
-            playedDialogues++;
-            playedDialoguesInLastDay++;
-            if (playedDialoguesInLastDay >= GameData.Instance.DialoguesPerDay)
+            Dialogue dialogue = GameData.Instance.findDialogue(dialogueId);
+            if (dialogue != null && dialogue.CharacterId != null
+                && GameData.Instance.SendersCounted.Contains(dialogue.CharacterId))
             {
-                StatProgressData dayProgressData = findGlobalStat(GameData.Instance.DayStatId);
-                if (dayProgressData != null) dayProgressData.incrementValue(1);
+                // TODO: remove this logic and substitute with a time stat defined in json
+                playedDialogues++;
+                playedDialoguesInLastDay++;
+                if (playedDialoguesInLastDay >= GameData.Instance.DialoguesPerDay)
+                {
+                    StatProgressData dayProgressData = findGlobalStat(GameData.Instance.DayStatId);
+                    if (dayProgressData != null) dayProgressData.incrementValue(1);
 
-                playedDialoguesInLastDay -= GameData.Instance.DialoguesPerDay;
+                    playedDialoguesInLastDay -= GameData.Instance.DialoguesPerDay;
+                }
             }
         }
     }
@@ -227,7 +230,7 @@ namespace data
     [System.Serializable]
     public class DialogueProgressData
     {
-        public event OnEvent onDialogueEnded;
+        public event OnDialogueEnded onDialogueEnded;
 
         [SerializeField]
         private string id;
@@ -256,7 +259,7 @@ namespace data
                 Debug.Log("Dialogue '" + id + "' ended");
                 if (onDialogueEnded != null)
                 {
-                    onDialogueEnded();
+                    onDialogueEnded(id);
                 }
             }
         }

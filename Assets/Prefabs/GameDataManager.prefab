@@ -58,3 +58,7 @@ MonoBehaviour:
       playedDialoguesInLastDay: 0
   dialoguesPerDay: 3
   dayStatId: day
+  sendersCounted:
+  - c_01
+  - c_02
+  - c_03
