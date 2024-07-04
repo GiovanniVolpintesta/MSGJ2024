@@ -79,11 +79,6 @@ public class GraphController : MonoBehaviour
 
     private void Bind()
     {
-        if (dayStatProgress != null)
-        {
-            dayStatProgress.onValueChanged += onDayChange;
-        }
-
         if (displayedStatProgress != null && GameData.Instance != null && GameData.Instance.ProgressData != null)
         {
             GameData.Instance.ProgressData.onDialogueEnded += OnDialogueEnded;
@@ -92,20 +87,10 @@ public class GraphController : MonoBehaviour
 
     private void Unbind()
     {
-        if (dayStatProgress != null)
-        {
-            dayStatProgress.onValueChanged -= onDayChange;
-        }
-
         if (displayedStatProgress != null && GameData.Instance != null && GameData.Instance.ProgressData != null)
         {
             GameData.Instance.ProgressData.onDialogueEnded -= OnDialogueEnded;
         }
-    }
-
-    private void onDayChange(float oldValue, float newValue)
-    {
-
     }
 
     private void OnDialogueEnded(Dialogue dialogue, bool incrementedTime)
