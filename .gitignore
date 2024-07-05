@@ -74,3 +74,5 @@ crashlytics-build.properties
 # Notepad++ backup files
 *.bak
 *.bak.meta
+
+/Screenshots/*
